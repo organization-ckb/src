@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.looip.project.repository.dao.ProjectDao">
+	<resultMap id="BaseResultMap" type="cn.looip.project.repository.domain.Project">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="pro_name" property="proName" jdbcType="VARCHAR" />
+		<result column="pro_contract_no" property="bargainNo" jdbcType="VARCHAR" />
+		<result column="pro_contract_pic" property="proImage" jdbcType="VARCHAR" />
+		<result column="pro_begin_time" property="starttime" jdbcType="DATE" />
+		<result column="pro_end_time" property="endtime" jdbcType="DATE" />
+		<result column="pro_status" property="status" />
+		<result column="customer_id" property="customer.id" />
+	</resultMap>
+
+	<resultMap id="CustomerMap" type="cn.looip.project.repository.domain.Customer">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="customer_name" property="name" />
+		<result column="customer_man" property="man" />
+		<result column="customer_sex" property="sex" />
+		<result column="customer_qq" property="qq" />
+		<result column="customer_status" property="status" />
+	</resultMap>
+	<!-- id column不是id,而是关联表外键 -->
+	<resultMap id="ProgrammerMap" type="cn.looip.project.repository.domain.Programmer">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="programmer_name" property="programmerName" />
+		<result column="programmer_level" property="level" />
+	</resultMap>
+	<!-- association级联映射 和 collection -->
+	<resultMap id="PprojectMap"
+		type="cn.looip.project.repository.domain.ProgrammerProject">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="begin_time" property="beginTime" />
+		<result column="end_time" property="endTime" />
+		<result column="status" property="status" />
+		<result column="agree" property="agree" />
+		<result column="TimeRecord" property="timeRecord" />
+		<collection property="programmer"
+			ofType="cn.looip.project.repository.domain.Programmer">
+			<id column="programmer_id" property="id" />
+			<result column="programmer_name" property="programmerName" />
+			<result column="programmer_level" property="level" />
+			<result column="programmer_status" property="programmerStatus" />
+			<result column="position" property="position" />
+		</collection>
+		<collection property="project"
+			ofType="cn.looip.project.repository.domain.Project">
+			<id column="project_id" property="id" />
+			<result column="pro_contract_pic" property="proImage" />
+		</collection>
+	</resultMap>
+
+	<resultMap id="PprojectsMap"
+		type="cn.looip.project.repository.domain.ProgrammerProject" >
+		<result column="endTime" property="endTime" />
+		<result column="beginTime" property="beginTime" />
+		<collection property="project" 
+			ofType="cn.looip.project.repository.domain.Project">
+			<id column="project_id" property="id" />
+			<result column="pro_name" property="proName" />
+			<result column="pro_contract_no" property="bargainNo" />
+			<result column="pro_status" property="status" />
+		</collection>
+	</resultMap>
+	
+      <resultMap id="ProgrammerProjectMap" type="cn.looip.project.repository.domain.ProgrammerProject" >
+	   <result column="id" property="id"/>
+	   <collection property="programmer"
+			ofType="cn.looip.project.repository.domain.Programmer">
+			<id column="programmer_id" property="id" />
+		</collection>
+     </resultMap>
+     
+	<resultMap id="PprojectesMap"
+		type="cn.looip.project.repository.domain.ProgrammerProject">
+		<result column="id"  property="id"/>
+		<result column="end_time" property="endTime" />
+		<result column="extension_time" property="extension_time" />
+		<result column="TimeRecord" property="timeRecord"/>
+		<collection property="project"
+			ofType="cn.looip.project.repository.domain.Project">
+			<result column="pro_name" property="proName" />
+			<result column="pro_end_time" property="endtime" />
+		</collection>
+		<collection property="programmer"
+			ofType="cn.looip.project.repository.domain.Programmer">
+			<result column="programmer_name" property="programmerName" />
+		</collection>
+	</resultMap>
+
+
+	<resultMap id="LogMap" type="cn.looip.project.repository.domain.Log">
+		<result column="cnum" property="cnum" />
+		<result column="vnum" property="vnum" />
+	</resultMap>
+	<!-- collection银映射结果集 一般用于一对多 例如：返回个private List<Project> projects; <resultMap 
+		type="Programmer" id="ProgrammerMaps"> <collection property="programmer" 
+		ofType="Project" resultMap="ProgrammerMaps"/> </resultMap> <resultMap id="ProgrammerMaps" 
+		type="Project"> <id column="Id" property="id" jdbcType="INTEGER" /> <result 
+		column="programmer_name" property="programmerName" /> </resultMap> -->
+
+
+	<!-- ***************管理员部分开始**************** -->
+	<select id="getFinalid" resultType="map">
+		select id from project order
+		by id desc LIMIT 1
+	</select>
+
+
+	<!-- 添加项目 -->
+	<insert id="saveProject" parameterType="cn.looip.project.repository.domain.Project">
+		insert into
+		project(pro_name,pro_contract_no,pro_begin_time,pro_end_time,pro_status,customer_id)
+		values(#{proName},#{bargainNo},#{starttime},#{endtime},#{status},#{customer.id})
+	</insert>
+	<!-- 查询客户 -->
+	<select id="getCustomer" resultMap="CustomerMap">
+		select * from customer
+	</select>
+
+	<!-- 当前项目条数 -->
+	<select id="getNum" resultType="int">
+		select count(*) from project
+		where pro_end_time &gt;= curdate()
+	</select>
+
+	<!-- 历史项目条数 -->
+	<select id="getNums" resultType="int">
+		select count(*) from project
+		where pro_end_time &lt; curdate()
+	</select>
+
+	<!-- 模糊项目条数 -->
+	<select id="getNumes" resultType="int">
+		select count(*) from project
+		where pro_name like '%${proName}%'
+	</select>
+
+	<update id="updateStatus">
+		update project set pro_status='0' where pro_end_time
+		&lt;curdate();
+	</update>
+	<!-- 分页查询当前项目 myql获取当前系统日期函数 curdate() xml转义符 &lt;相当于< &gt;相当于>号 -->
+	<select id="getProjects" parameterType="int" resultMap="BaseResultMap">
+		select *
+		from project where pro_end_time &gt;= curdate() limit
+		#{pagerIndex},#{pagerNum}
+	</select>
+
+	<!-- 分页查询历史项目 -->
+	<select id="getProjectes" parameterType="int" resultMap="BaseResultMap">
+		select *
+		from project where pro_end_time &lt; curdate() limit
+		#{pagerIndex},#{pagerNum}
+	</select>
+
+	<!-- 模糊查询项目 -->
+	<select id="getSeach" parameterType="int" resultMap="BaseResultMap">
+		select *
+		from project where pro_name like '%${proName}%' limit
+		#{pagerIndex},#{pagerNum}
+	</select>
+
+	<!-- 根据ID查询项目信息 -->
+	<select id="getProject" parameterType="int" resultMap="BaseResultMap">
+		select *
+		from project where id=#{id}
+	</select>
+
+	<!-- 修改项目 -->
+	<update id="updateProject" parameterType="cn.looip.project.repository.domain.Project">
+		update project set
+		pro_name=#{proName},pro_contract_no=#{bargainNo},pro_begin_time=#{starttime},pro_end_time=#{endtime},pro_status=#{status},customer_id=#{customer.id}
+		where id=#{id}
+	</update>
+	<!-- 删除项目 -->
+	<delete id="delectProject" parameterType="int">
+		delete from project
+		where id=#{id}
+	</delete>
+
+	<!-- 查询程序员 闲置: 0 -->
+	<select id="getProgrammer" parameterType="int" resultMap="ProgrammerMap">
+		select
+		* from programmer where programmer_status='0'
+	</select>
+	<!-- 分配项目 -->
+	<insert id="saveProgrammers"
+		parameterType="cn.looip.project.repository.domain.ProgrammerProject">
+		insert into
+		programmer_project(programmer_id,project_id,begin_time,end_time,extension_time,status,agree)
+		values(#{programmer.id},#{project.id},#{beginTime},#{endTime},0,0,0)
+	</insert>
+
+	<!--修改程序员状态 -->
+	<update id="updateState" parameterType="int">
+		update programmer set
+		programmer_status=#{1} where id=#{0}
+	</update>
+	<!-- 踢出程序员 -->
+	<delete id="deletePprogrammer" parameterType="int">
+		delete from
+		programmer_project where id=#{id}
+	</delete>
+
+	<!-- 查询项目成员 方法一不用级联：返回resultMap,返回那些参数，在实体类里面定义相关的属性和get/set 方法二用级联：返回resultMap，association级联，坏处是占资源 -->
+	<select id="getPproject" parameterType="int" resultMap="PprojectMap">
+		select *
+		from programmer_project pp, programmer pg,project p where pp.programmer_id=pg.id and pp.project_id=p.id
+		and project_id=#{id} limit #{pagerIndex},#{pagerNum}
+	</select>
+
+	<select id="getNumber" parameterType="int" resultType="int">
+		select
+		count(*)
+		from programmer_project where project_id=#{id}
+	</select>
+	<!-- 查询续约记录 -->
+	<select id="getRecord" parameterType="int" resultMap="PprojectesMap">
+		select
+		pp.id as id,pp.TimeRecord as TimeRecord,pro_name,pro_end_time,end_time,extension_time,programmer_name
+		from programmer_project pp LEFT JOIN programmer pg on
+		pp.programmer_id=pg.id
+		LEFT JOIN project p on p.id=pp.project_id where
+		status='1' ORDER by
+		pp.TimeRecord limit #{0},#{1}
+	</select>
+    <select id="getRecordCount" resultType="int">
+     select count(*) from programmer_project where status='1'
+    </select>
+  
+  <update id="updateContract">
+   update programmer_project set end_time=#{2},begin_time=#{1},status=0,agree=1 where id=#{0}
+  </update>
+  
+  <!-- 
+  status=0 增加天数过后，修改续约状态
+  extension_time=0  续约天数清零
+  agree=1  同意续约状态，完成
+   -->
+  <update id="updateContracts" parameterType="int">
+    update programmer_project set end_time=date_add(end_time, INTERVAL #{1} day),status=0,extension_time=0,agree=1 where id=#{0}
+  </update>
+  
+  
+	<!-- 报告视频 <select id="getLogs" parameterType="int" resultMap="LogMap" > 
+		select count(log_content) as cnum,count(log_viod) as vnum from development_log 
+		where project_id=#{0} and programmer_id=#{1} </select> -->
+
+	<!-- ***************客户部分开始**************** -->
+
+	<select id="getNumbers" resultType="int" parameterType="int">
+		select
+		count(*) from project where customer_id=#{id}
+	</select>
+
+	<!-- 申请续约-->
+
+	<update id="updateExtension"
+		parameterType="cn.looip.project.repository.domain.ProgrammerProject">
+		update programmer_project set
+		extension_time=#{extension_time},status=#{status},TimeRecord=curdate()
+		where
+		programmer_id=#{programmer.id} and project_id=#{project.id}
+	</update>
+
+	<!-- 客户项目 -->
+	<select id="getCProject" parameterType="int" resultMap="BaseResultMap">
+		select *
+		from project where customer_id=#{2} ORDER by pro_begin_time DESC limit
+		#{0},#{1}
+	</select>
+
+	<!-- ***************程序员******************** -->
+	<select id="getNumberes" resultType="int" parameterType="int">
+		select
+		count(*) from programmer_project where programmer_id=#{id}
+	</select>
+
+
+
+	<!-- 查询程序员的项目 -->
+	<select id="getPprojects" parameterType="int" resultMap="PprojectsMap">
+		select
+		p.id as project_id,p.pro_name as pro_name, p.pro_contract_no as
+		pro_contract_no,p.pro_status as pro_status, pp.begin_time as
+		beginTime,pp.end_time as endTime
+		from programmer_project pp
+		LEFT JOIN
+		programmer pg on pp.programmer_id=pg.id
+		LEFT JOIN project p on
+		p.id=pp.project_id
+		where programmer_id=#{2} ORDER
+		by pro_begin_time DESC
+		limit #{0},#{1}
+	</select>
+	<!-- 图片上传到数据库 -->
+	<update id="saveFiles" parameterType="map">
+	update  project set pro_contract_pic=#{fileName}  where id=#{id}
+	</update>
+	<!-- 查询图片 -->
+	<select id="imgNumber" parameterType="int" resultType="String">
+	select pro_contract_pic from project where id=#{id}
+	</select>
+	
+	<select id="getcustomerName" parameterType="int" resultType="String">
+	select customer_man from customer where id=#{id}
+	</select>
+	<select id="getprogrammerName" parameterType="int" resultType="String">
+	select programmer_name from programmer where id=#{id}
+	</select>
+	 
+	 <update id="updateProjectState" parameterType="int">
+	  update project set pro_status=#{1} where id=#{0}
+	 </update>
+	 
+	 <select id="getPprogrammer" parameterType="int" resultType="String">
+	 select * from programmer_project where id=#{id}
+	 </select>
+	 
+	 <select id="getPprogramm" parameterType="int" resultType="String">
+	  select * from programmer_project where project_id=#{id}
+	 </select>
+	 
+	 
+	  <update id="updateProjectStates">
+	   update project set pro_status=0 where pro_end_time&lt;=curdate()
+	 </update>
+	 
+	 <select id="endTimeprogrammer" resultMap="ProgrammerProjectMap">
+	   select id, programmer_id from programmer_project where end_time&lt;=curdate()  group by  programmer_id
+	 </select>
+	 <!-- 判断是不是最后一次结束时间项目，是则返回ID否则返回空 -->
+	 <select id="getProgrammerID" parameterType="int" resultType="Integer">
+	 select programmer_id from  programmer_project where 
+     (select  end_time from  programmer_project where programmer_id=#{id} ORDER by end_time  DESC LIMIT 1) &lt;=curdate()
+     and programmer_id=#{id}  group by  programmer_id
+	 </select>
+	 <!-- 程序员工作状态修改为空闲 -->
+	 <update id="updatePprogrammerState"  parameterType="int">
+	   update programmer set programmer_status=0 where id=#{id}
+	 </update>
+	 
+	 <select id="getPprojectID" parameterType="int"  resultType="int" >
+	 select id from programmer_project where  project_id=#{id}
+	 </select>
+</mapper>

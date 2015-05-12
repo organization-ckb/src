@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="cccrm">
+        <wb-resource deploy-path="/" source-path="/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="java-output-path" value="/cccrm/build/classes"/>
+        <property name="context-root" value="cccrm"/>
+    </wb-module>
+</project-modules>

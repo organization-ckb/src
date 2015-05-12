@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+.head {
+	border-bottom: 1px solid #CBCBCB;
+	width: 960px;
+	height: 80px;
+}
+
+.logo {
+	float: left;
+	margin-left: 40px;
+	margin-top: 10px
+}
+
+.control {
+	float: right;
+	margin-top: 40px;
+	margin-right: 30px;
+}
+
+/*
+.tel {
+	float: right;
+	margin-top: 40px;
+	margin-right: 30px;
+}*/
+
+a:LINK {
+	text-decoration: none;
+	color: #5A5A5A
+} /*未被访问的链接*/
+a:VISITED {
+	text-decoration: none;
+	color: #5A5A5A
+} /*已经被访问链接*/
+a:HOVER {
+	text-decoration: none;
+	color: blue;
+} /*鼠标放上去*/

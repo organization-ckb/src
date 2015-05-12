@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.looip.jurisdiction.repository.dao.JurisdictionDAO">
+	<resultMap id="BaseResultMap"
+		type="cn.looip.jurisdiction.repository.domain.SysUser">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+		<result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="user_type" property="userType" jdbcType="INTEGER" />
+		<result column="user_role_id" property="userRoleId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		Id, login_name, login_pwd
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where Id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectUserByLogin" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select * 
+		from sys_user
+		where login_name = #{loginName} and login_pwd = #{loginPwd}
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_user
+		where Id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insertSelective" parameterType="cn.looip.jurisdiction.repository.domain.SysUser">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				Id,
+			</if>
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="loginPwd != null">
+				login_pwd,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="loginName != null">
+				#{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPwd != null">
+				#{loginPwd,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 新增用户 -->
+	<insert id="insertSysUser" parameterType="cn.looip.jurisdiction.repository.domain.SysUser"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		sys_user(login_name,login_pwd,user_email,user_mobile,user_id,user_type,user_role_id)
+		values
+		(#{loginName},#{loginPwd},#{userEmail},#{userMobile},#{userId},#{userType},#{userRoleId});
+	</insert>
+
+	<!-- 新增客户信息 -->
+	<insert id="insertSysUserByCustomer" parameterType="cn.looip.jurisdiction.repository.domain.SysUser">
+	    insert into sys_user(login_name,login_pwd,user_email,user_mobile,user_id,user_type)
+	    values(#{loginName},#{loginPwd},#{userEmail},#{userMobile},#{userId},2);
+	</insert>
+	
+	<!-- 更新程序员 -->
+	<update id="updateSysUserByProgrammer" parameterType="cn.looip.jurisdiction.repository.domain.SysUser">
+		update sys_user set
+		login_name=#{loginName},login_pwd=#{loginPwd},user_email=#{userEmail},user_mobile=#{userMobile},user_role_id=#{userRoleId}
+		where user_id=#{userId} and user_type=#{userType}
+	</update>
+	<!-- 更新客户 -->
+	<update id="updateSysUserByCustomer" parameterType="cn.looip.jurisdiction.repository.domain.SysUser">
+		update sys_user set
+		login_name=#{loginName},login_pwd=#{loginPwd},user_email=#{userEmail},user_mobile=#{userMobile}
+		where user_id=#{userId} and user_type=#{userType};
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.looip.jurisdiction.repository.domain.SysUser">
+		update sys_user
+		<set>
+			<if test="loginName != null">
+				login_name = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPwd != null">
+				login_pwd = #{loginPwd,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

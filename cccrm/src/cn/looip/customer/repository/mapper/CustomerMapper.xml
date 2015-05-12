@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.looip.customer.repository.dao.CustomerDAO" >
+  <resultMap id="CustomerMap" type="cn.looip.customer.repository.domain.Customer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_man" property="customerMan" jdbcType="VARCHAR" />
+    <result column="customer_sex" property="customerSex" jdbcType="SMALLINT" />
+    <result column="customer_qq" property="customerQq" jdbcType="VARCHAR" />
+    <result column="customer_status" property="customerStatus" jdbcType="SMALLINT" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+    <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 新增客户 -->
+   <insert id="insertCustomer" parameterType="cn.looip.customer.repository.domain.Customer"
+   useGeneratedKeys="true" keyProperty="id">
+   
+    insert into customer(customer_name,customer_man,customer_sex,customer_qq,customer_status)
+  	values (#{customerName},#{customerMan},#{customerSex},#{customerQq},0);
+   
+   </insert>
+  
+  <!-- 查询所有客户信息 -->
+  <select id="getCustomers" resultMap="CustomerMap" parameterType="map">
+  
+  	select customer.*,sys_user.* from customer
+  	left join sys_user on customer.id = sys_user.user_id 
+  	where sys_user.user_type = 2 limit #{pagerIndex}, #{pagerNum}
+  
+  </select>
+  
+  <!-- 按条件查询客户信息 -->
+  <select id="searchcustomer" resultMap="CustomerMap" parameterType="map">
+  
+  	select customer.*,sys_user.* from customer
+  	left join sys_user on customer.id = sys_user.user_id 
+  	where sys_user.user_type = 2
+  	<if test="status != -1">
+  	and customer.customer_status = #{status}
+  	</if>
+  	limit #{pagerIndex}, #{pagerNum};
+  
+  </select>
+  
+  	<!-- id查询客户 -->
+	<select id="getCustomer" resultMap="CustomerMap" parameterType="map">
+	select customer.*,sys_user.* from customer
+  	left join sys_user on customer.id = sys_user.user_id 
+  	where sys_user.user_type = 2 and customer.id = #{id}
+  
+	</select>
+  
+  	<!-- 更新客户 -->
+  	<update id="updateCustomer" parameterType="cn.looip.customer.repository.domain.Customer">
+  	update customer set
+  	customer_name = #{customerName},customer_man = #{customerMan},customer_sex = #{customerSex},
+  	customer_qq = #{customerQq} where id = #{id};
+  	</update>
+  	
+  	<!-- 当前客户条数 -->
+	<select id="getNum" resultType="int">
+	select count(*) from customer
+  	left join sys_user on customer.id = sys_user.user_id 
+  	where sys_user.user_type = 2;
+	</select>
+	
+	<!-- 查询的客户总条数 -->
+	<select id="getSearchNum" resultType="int">
+	select count(*) from customer
+  	left join sys_user on customer.id = sys_user.user_id 
+  	where sys_user.user_type = 2
+  	<if test="status != -1">
+  	and customer.customer_status = #{status}
+  	</if>;
+	</select>
+</mapper>

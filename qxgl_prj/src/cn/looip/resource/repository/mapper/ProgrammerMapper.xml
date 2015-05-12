@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.looip.resource.repository.dao.ResourceDAO">
+	<resultMap id="ProgrammerMap"
+		type="cn.looip.resource.repository.domain.Programmer">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="programmer_name" property="programmerName"
+			jdbcType="VARCHAR" />
+		<result column="department" property="department" jdbcType="INTEGER" />
+		<result column="programmer_sex" property="programmerSex"
+			jdbcType="SMALLINT" />
+		<result column="programmer_qq" property="programmerQq"
+			jdbcType="VARCHAR" />
+		<result column="programmer_level" property="programmerLevel"
+			jdbcType="SMALLINT" />
+		<result column="programmer_status" property="programmerStatus"
+			jdbcType="SMALLINT" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 新增程序员 -->
+	<insert id="insertProgrammer" parameterType="cn.looip.resource.repository.domain.Programmer"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		programmer(programmer_name,department,programmer_sex,programmer_qq,programmer_level,programmer_status)
+		values
+		(#{programmerName},#{department},#{programmerSex},#{programmerQq},#{programmerLevel},0);
+	</insert>
+
+ 	<!-- 更新程序员 -->
+	<update id="updateProgrammer" parameterType="cn.looip.resource.repository.domain.Programmer">
+		update programmer set
+		programmer_name=#{programmerName},department=#{department},programmer_sex=#{programmerSex},programmer_qq=#{programmerQq},programmer_level=#{programmerLevel},programmer_status=#{programmerStatus}
+		where id=#{id}
+	</update>
+
+	<!-- 查询程序员 -->
+	<select id="getProgrammer" resultMap="ProgrammerMap"
+		parameterType="map">
+		select programmer.*,sys_user.* from programmer
+		left join sys_user on programmer.id = sys_user.user_id 
+		where sys_user.user_type = 1 and programmer.id = #{id};
+	</select>
+
+	<!-- 查询程序员list -->
+	<select id="getprogrammers" resultMap="ProgrammerMap"
+		parameterType="map">
+		select programmer.*,sys_user.* from programmer
+		inner join sys_user
+		on programmer.id = sys_user.user_id where sys_user.user_type = 1 limit #{0},#{1};
+	</select>
+	<select id="count" resultType="int">
+	select count(*) from programmer
+		inner join sys_user
+		on programmer.id = sys_user.user_id where sys_user.user_type = 1;
+	</select>
+
+	<!-- 按条件查询程序员 -->
+	<select id="searchprogrammer" resultMap="ProgrammerMap"
+		parameterType="map">
+		select programmer.*,sys_user.* 
+		from programmer 
+		left join sys_user on programmer.id = sys_user.user_id 
+		where sys_user.user_type = 1 
+		<if test="department != -1" >
+		and programmer.department = #{department} 
+		</if>
+		<if test="status != -1" >
+		and programmer.programmer_status = #{status}
+		</if>
+		;
+	</select>
+
+	<!--程序员总条数 -->
+	<select id="getNum" resultType="int">
+		select count(*) from programmer;
+	</select>
+
+	<!-- 分页查询程序员 -->
+	<select id="getPageProgrammer" parameterType="int" resultMap="ProgrammerMap">
+		select * from programmer limit #{pagerIndex},#{pagerNum}
+	</select>
+
+</mapper>

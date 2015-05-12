@@ -1,0 +1,34 @@
+@CHARSET "UTF-8";
+
+.main {
+	border: 0px solid red;
+	width: 650px;
+	height: 500px;
+	margin-left: 300px;
+	margin-top: -10px;
+}
+
+.form-label {
+
+	border: 0px solid red;	
+	margin-top: 5px;
+	text-align: center;
+	color: #A4A4A4
+}
+/*
+.two{width: 400px;height: 30px; border: 0px solid red; float: left;margin-top: 5px;}
+.two input{width: 250px;height: 25px;}
+.two input[type='radio']{width: 10px;height: 25px;font-size: 50px;border: 1px solid red;}
+.two select{width: 256px;height: 30px;text-align: center;}
+.two input[name='addprogrammer']{width: 256px;height: 30px;background-color: #68B483;color: #EEF6F0}
+*/
+.bottom {
+	border: 0px solid #CBCBCB;
+	width: 900px;
+	margin-top: 30px;
+}
+/*
+.three{width: 400px;
+		height: 30px; border: 0px solid red; float: left;margin-top: 5px;
+		padding-left: 0px;line-height: 30px;}
+*/

@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+.department{float: left;border: 1px solid red;width: 100px;}
+.main{float: left;border: 0px solid red;width: 100px;}
+.bottom{1px solid red;margin-left: 500px;margin-top: 20px;}
+.gz{float: left;border: 0px solid red;margin-top: 50px;margin-left: 40px;width: 100px;height: 30px;}
+.zt{float: left;border: 0px solid red;margin-top: 50px;margin-left: 40px;width: 100px;height: 30px;}
+.xz{border: 1px solid gray;width: 100px;height: 30px;margin-left: 637px;margin-top: 50px;vertical-align: middle;line-height: 30px;background-color: #68B582;}
+select{width: 100px;height: 30px;text-align: center;}
+.xz a:LINK{text-decoration: none;color: white;}/*未被访问的链接*/
+.xz a:VISITED {text-decoration: none;color: white}/*已经被访问链接*/
+.xz a:HOVER {text-decoration: none;color: blue;}/*鼠标放上去*/
+.t1{border: 0px solid red;width: 80px;padding: 0px;}
+.t2{border: 0px solid red;width: 70px;padding: 0px;}
+.t3{border: 0px solid red;width: 60px;margin: 0px;}
+.t4{border: 0px solid red;width: 100px;}
+.t5{border: 0px solid red;width: 100px;}
+.t6{border: 0px solid red;width: 100px;}
+.t7{border: 0px solid red;width: 70px;}
+.t8{border: 0px solid red;}
+tr{background-color: #F6FAFC;height: 30px;margin: 0px;padding: 0px;}
+table{border: 1px solid #E8E9E8;margin-left: 40px;color: #5A5B5B;margin-top: 0px;}
+#btn_search{margin-top: -20px;margin-left: 100px;width: 50px;height: 20px;}

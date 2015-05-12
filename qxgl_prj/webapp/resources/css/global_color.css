@@ -1,0 +1,387 @@
+@charset "utf-8";
+body
+{
+   
+   background-color: #e8f3f8 ;
+}
+
+#header
+{
+   background-color:#FFFFFF;
+   
+}
+#header a
+{
+    color: #636363;
+   
+}
+
+
+#navi
+{
+    background: url(../img/navigation.png) repeat-x;
+}
+
+#main
+{
+    background:#FFE4E1 ;
+}
+#mains
+{
+    background:#EDEDED;
+}
+
+#record
+{
+    background: #fff;
+   
+}
+.bottom a{
+	color:#697d84;
+	font-size: 15px;
+	font-weight:bold;
+}
+
+
+#datalist
+{
+    background-color:#fff;
+}
+
+
+#tres{
+	 border: #CCC solid 1px;
+	 background-color:#f7f9fd;
+	 font-size: small;
+	  color: #697d84;
+}
+
+#tres:hover
+{
+    background-color:#FFFAF0;
+   
+}
+
+.trs{
+	 
+	border: #CCC solid 1px;
+	
+}
+#datalist input{
+	color: #697d84;
+	outline:none;
+	width:150px;
+	height: 32px;
+	overflow: hidden;
+	cursor: pointer;
+	
+}
+
+#datalist th
+{
+    background: #fbedce; 
+    color: #697d84;
+    font-size: 15px;
+}
+
+
+div.detail_info
+{
+    background-color: #fbf0db;
+    border: 1px solid #ff9000;
+    color: #000;
+}
+
+
+span.required
+{
+    color:Red;
+    /*border:1px solid red;*/
+}
+/*div.validate_msg_long,div.validate_msg_medium,div.validate_msg_short,div.validate_msg_tiny*/
+div.error_msg
+{
+    color:Red;
+    background-image:url("../img/wrong.gif") ;
+    background-repeat:no-repeat;
+    background-position:left center;
+    border:1px solid red;
+}
+p.hide
+{
+    border-bottom:1px solid red;
+}
+#divPwds
+{
+    border-top:1px dotted #a1c7d9;
+    border-bottom:1px dotted #a1c7d9;
+    background-color:#fafeff;
+}
+#optionalInfo
+{
+   background-color:#f4f4f4;
+   border:1px solid #b4b4b4;
+}
+
+div.save_success
+{
+    background-color: #fbf0db;
+    border: 1px solid #ff9000;
+    color: #af6606;
+    background-image: url(../img/ok.png);
+    background-repeat: no-repeat;
+    background-position:10px center;
+}
+div.save_fail
+{
+    background-color: #fbf0db;
+    border: 1px solid #ff9000;
+    color: #F00;
+    background-image: url(../img/fail.png);
+    background-repeat: no-repeat;
+    background-position:10px center;
+}
+
+div.operate_success
+{
+    background-color: #fdecec;
+    border: 1px solid #f57676;
+    color: #af6606;    
+    background-image: url(../img/ok.png);
+    background-repeat: no-repeat;
+    background-position:10px center;
+}
+div.operate_fail
+{
+    background-color: #fdecec;
+    border: 1px solid #f57676;
+    color: #f00;    
+    background-image: url(../img/warning.png);
+    background-repeat: no-repeat;
+    background-position:10px center;
+}
+div.warning_fail
+{
+    background-color: #fdecec;
+    border: 1px solid #f57676;
+    color: #f00;
+    background-repeat: no-repeat;
+    text-align:left;
+    background-position:10px center;
+}
+/* 分页 */
+#pages a
+{
+    color: #636363;
+}
+#pages a:hover
+{
+    background: #cddde4;
+    border: #97b9c9 solid 1px;
+    color: #067db5;
+}
+
+
+#pages a.current_page
+{
+    background: #FFF;
+    border: #89bdd8 solid 1px;
+    color: #067db5;
+}
+
+
+
+#footer
+{
+    color: #FFF;
+}
+
+
+input,select
+{
+    border:1px solid silver;
+}
+input.readonly,textarea.readonly,span.readonly
+{
+    background-color:#f6f6f6;
+}
+input:focus,select:focus
+{
+    border-left:1px solid gray;
+    border-top:1px solid gray;
+}
+input.btn_search,input.btn_search:hover,input.btn_search:active
+{
+    background: url(../img/search.png) no-repeat;
+    color: #0a97c9;
+    border:0;
+}
+input.btn_search_large,input.btn_search_large:hover,input.btn_search_large:active
+{
+    background: url(../img/search_large.png) no-repeat;
+    color: #0a97c9;
+    border:0;
+}
+input.btn_search:hover,input.btn_search_large:hover
+{
+    color: #0a97ff;
+}
+input.btn_add,input.btn_add:hover
+{
+    background: url(../img/btn_bg.png) no-repeat left top;
+    color: #fff;
+    border:0;
+}
+
+a.btn_add,a.btn_add:hover
+{
+    background: url(../img/btn_bg.png) no-repeat;
+    width: 71px;
+    height: 26px;
+    line-height: 26px;/*line-height 灞炴�ц缃闂寸殑璺濈锛堣楂橈級銆�*/
+    text-align: center;/* 鏂囨湰灞呬腑瀵归綈*/
+    color: #fff;
+    display: inline-block;/*inline璁剧疆鍜屽厓绱犲悓涓�琛岋紝block鎺у埗瀹藉害鍜岄珮搴�*/
+}
+
+input.btn_modify,input.btn_modify:hover
+{
+    background: url(../img/modification.png) no-repeat left center;
+    color: #000;
+    border:0;
+}
+input.btn_delete,input.btn_delete:hover
+{
+    background: url(../img/delete.png) no-repeat left center;
+    color: #000;
+    border:0;
+}
+a.btn_delete
+{
+    color: #32CD32;
+    border:0;
+}
+a.btn_delete:hover{
+	color: #FFA500;
+    border:0;
+}
+input.btn_start,input.btn_start:hover
+{
+    background: url(../img/start.png) no-repeat left center;
+    color:#1A1A1A;
+    border:0;
+}
+input.btn_pause,input.btn_pause:hover
+{
+    background: url(../img/pause.png) no-repeat left center;
+    color: #000;
+    border:0;
+}
+input.btn_save
+{
+    background: url(../img/form_btn.png) no-repeat;
+    color: #FFF;
+    border:0;
+}
+input.btn_save:hover
+{
+    background: url(../img/form_btn_on.png) no-repeat;
+}
+input.sort_asc
+{
+    background: url(../img/up.png) no-repeat;
+    color: #FFF;
+}
+input.sort_desc
+{
+    background: url(../img/down.png) no-repeat;
+    color: #FFF;
+}
+input.sort_asc,input.sort_desc,input.sort_asc:hover,input.sort_desc:hover
+{
+    border:0;
+}
+
+
+body.index
+{
+   
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+#index_navi
+{
+    background: url(../img/index_navi_bg.png) repeat-x;
+}
+
+.submitStyle {
+	     width:110px;   
+         height:38px;   
+         background:url(../img/login_btn.png) no-repeat center;   
+         cursor:pointer; 
+	     background-color: #00629f;
+	     
+	      display:block;   
+          font-size:0;   
+          line-height:0;   
+          text-indent:-9999px; 
+         
+	}
+
+body.login
+{
+   
+   
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+div.login_box
+{
+    background: url(../img/login_box.png) no-repeat;
+}
+div.login_box table tr td
+{
+    color: #FFF;
+}
+
+body.error_page
+{
+  
+  
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+body.error_power_page
+{
+   
+   
+    background-position: center 40%;
+    background-repeat: no-repeat;
+}
+#error
+{
+     color:Red;
+}
+#error span,#error a
+{
+    color:Yellow;
+}
+#error a:hover
+{
+    color:#FFF;
+}
+/* 鎶ヨ〃椤甸潰 */
+#report_main
+{
+    background-color:#8ac1db; 
+}
+
+a.tab_on{
+	background:url(../img/tab_on.png) no-repeat;
+	color:#006e98;	
+}
+a.tab_out{
+	background:url(../img/tab_out.png) no-repeat;
+	color:#fff;	
+}
