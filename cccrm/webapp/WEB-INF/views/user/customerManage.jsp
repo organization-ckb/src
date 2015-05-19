@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>客户管理</title>
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link type="text/css" rel="stylesheet" media="all"
 	href="../resources/css/global.css" />
 <link type="text/css" rel="stylesheet" media="all"
@@ -35,10 +36,21 @@
 				<div id="subfield"></div>
 				<div class="search_add">
 				<div class="left">
-					<select name="status" id="sel_status" style="margin-left: 30px;">	
-					<option value="-1">全部</option>
-					<option value="0">空闲</option>
-					<option value="1">项目中</option>
+					<select name="status" id="sel_status" style="margin-left: 30px;">
+					<c:if test="${searchcustomers == 'searchcustomers'}">
+					<c:if test="${status=='-1'}">
+					<c:set var="a" value="selected"></c:set>	
+					</c:if>
+					<c:if test="${status=='0'}">
+					<c:set var="b" value="selected"></c:set>	
+					</c:if>
+					<c:if test="${status=='1'}">
+					<c:set var="c" value="selected"></c:set>	
+					</c:if>
+					</c:if>
+					<option value="-1" ${a}>全部</option>
+					<option value="0" ${b}>空闲</option>
+					<option value="1" ${c}>项目中</option>
 					</select>
 					<input type="hidden" value="${status}" id="hidden-status"/>
 					<button id="btn_search"  class="find">搜索</button>
@@ -101,13 +113,14 @@
 					<pg:pager items="${count}" export="currentPageNumber=pageNumber"
 						maxPageItems="${initParam.pagerNum}" maxIndexPages="5"
 						isOffset="true" url="${a}">
+						<c:if test="${searchcustomers == 'searchcustomers'}">
+						<pg:param name="status" value="${status}" />
+						</c:if>
 						<pg:first>
 							<a href="${pageUrl}">首页</a>
-							<%-- <button onclick="gotoPage('${pageUrl}');">首页</button> --%>
 						</pg:first>
 						<pg:prev>
 							<a href="${pageUrl}">前页</a> 
-							<%-- <button onclick="gotoPage('${pageUrl}');">前页</button> --%>
 						</pg:prev>
 						<pg:pages>
 							<c:choose>
@@ -116,17 +129,14 @@
 								</c:when>
 								<c:otherwise>
 									<a href="${pageUrl}">${pageNumber }</a> 
-									<%-- <button onclick="gotoPage('${pageUrl}');">${pageNumber}</button> --%>
 								</c:otherwise>
 							</c:choose>
 						</pg:pages>
 						<pg:next>
 								 <a href="${pageUrl}">后页</a> 
-							<%-- <button onclick="gotoPage('${pageUrl}');">后页</button> --%>
 						</pg:next>
 						<pg:last>
 								 <a href="${pageUrl}">尾页</a> 
-							<%-- <button onclick="gotoPage('${pageUrl}');">尾页</button> --%>
 						</pg:last>
 					</pg:pager>
 				</div>

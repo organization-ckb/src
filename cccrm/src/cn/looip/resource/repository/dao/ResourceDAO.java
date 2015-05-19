@@ -40,5 +40,6 @@ public interface ResourceDAO {
 	 *程序员集合总条数
 	 */
 	public int count();
+	public int Searchcount(@Param("department") int department,@Param("status") int status);
 }
 

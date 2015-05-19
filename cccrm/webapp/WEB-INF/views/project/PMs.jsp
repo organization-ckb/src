@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>我的项目</title>
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link type="text/css" rel="stylesheet" media="all"
 	href="../resources/css/global.css" />
 <link type="text/css" rel="stylesheet" media="all"

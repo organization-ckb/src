@@ -13,17 +13,16 @@
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
 			connectionURL="jdbc:mysql://112.65.46.6:63306/cccrm" userId="root"
 			password="chichuang123" />
-
+		<!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/cccrm" 
+			userId="root" password="root" /> -->
 		<javaModelGenerator targetPackage="cn.looip.jurisdiction.repository.domain"
 			targetProject="cccrm" />
-<!-- 
-		<javaModelGenerator targetPackage="cn.looip.customer.repository.domain"
+		<!-- <javaModelGenerator targetPackage="cn.looip.customer.repository.domain" 
 			targetProject="cccrm" /> -->
 
 		<sqlMapGenerator targetPackage="cn.looip.jurisdiction.repository.mapper"
 			targetProject="cccrm" />
-<!-- 
-		<sqlMapGenerator targetPackage="cn.looip.customer.repository.mapper"
+		<!-- <sqlMapGenerator targetPackage="cn.looip.customer.repository.mapper" 
 			targetProject="cccrm" /> -->
 		<!-- <javaClientGenerator targetPackage="cn.looip.crm.repository.mapper1" 
 			targetProject="cccrm" type="XMLMAPPER" /> -->
@@ -53,8 +52,7 @@
 		<table tableName="project" domainObjectName="Project"
 			enableCountByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" enableUpdateByExample="false">
-
 		</table>
-
 	</context>
+
 </generatorConfiguration>

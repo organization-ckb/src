@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/programmeraddsuccess.css"
 	type="text/css"></link>
-
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/layout/head.jsp" />
@@ -21,10 +21,10 @@
 				<div>
 					<div class="success">程序员新增成功!</div>
 					<div>
-						<a href="http://localhost:8080/cccrm/resource/addProgrammer">继续新增</a>
+						<a href="${path}/resource/addProgrammer">继续新增</a>
 					</div>
 					<div>
-						<a href="http://localhost:8080/cccrm/resource/resourceManage">查看资源管理</a>
+						<a href="${path}/resource/resourceManage">查看资源管理</a>
 					</div>
 				</div>
 			</form>

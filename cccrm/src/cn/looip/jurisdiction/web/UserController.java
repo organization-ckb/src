@@ -1,6 +1,7 @@
 package cn.looip.jurisdiction.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -18,14 +19,17 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.looip.core.utils.Utils;
 import cn.looip.jurisdiction.repository.domain.SysUser;
 import cn.looip.jurisdiction.service.interfaces.JurisdictionService;
+import cn.looip.project.repository.domain.ProgrammerProject;
+import cn.looip.project.service.interfaces.ProjectService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController
 {
-	// 权限业务接口
 	@Autowired
 	private JurisdictionService jurisdictionService;
+	@Autowired
+	private ProjectService proservice;
 
 	@RequestMapping(value = "/home")
 	public ModelAndView home()
@@ -47,8 +51,6 @@ public class UserController
 	@RequestMapping("/logout")
 	public ModelAndView doLogOut(HttpServletRequest request)
 	{
-//		HttpSession session = request.getSession(); 
-//		session.invalidate();
 		return new ModelAndView("redirect:login");
 	}
 
@@ -59,8 +61,6 @@ public class UserController
 			@RequestParam("loginName") String loginName,
 			@RequestParam("loginPwd") String loginPwd)
 	{
-		// Map<String, Object> map = new HashMap<String, Object>();
-		// boolean result = jurisdictionService.checkLogin(loginName, loginPwd);
 		SysUser user = jurisdictionService.getLoginUser(loginName, loginPwd);
 		if (user != null)
 		{
@@ -68,18 +68,29 @@ public class UserController
 			if(cookie!=null && cookie.getValue().equals("true")){
 				Utils.addCookie(response, "loginName", user.getLoginName(), 3600*24*7);
 				Utils.addCookie(response, "loginPwd", user.getLoginPwd(), 3600*24*7);
-			}else{
-//				Utils.addCookie(response, "loginName", null,0);
-//				Utils.addCookie(response, "loginPwd", null,0);
 			}
 			HttpSession session = request.getSession(); 
 			session.setAttribute("loginUser", user);
-			//return new ModelAndView("redirect:../resource/resourceManage");
+			/**
+			 * 登录成功：修改已结束的项目状态，查询已结束的程序员ID，
+			 * 查出最后一次项目都已经结束了的ID，修改程序员状态;
+			 */
+			proservice.updateStatus();
+			List<ProgrammerProject> Pgprojecr = proservice.endTimeprogrammer();
+			if (Pgprojecr != null) {
+				for (int i = 0; i < Pgprojecr.size(); i++) {
+					int id = Pgprojecr.get(i).getProgrammer().getId();
+					Integer ids = proservice.getProgrammerID(id);
+					if (ids != null) {
+						proservice.updatePprogrammerState(ids);
+					}
+				}
+			}
+			
 			return new ModelAndView("redirect:../project/projectManage");
 		}
 		else
 		{
-			// map.put("mes", "用户名/密码错误");
 			model.addAttribute("loginName", loginName);
 			model.addAttribute("loginPwd", loginPwd);
 			model.addAttribute("msg", "用户名/密码错误");
@@ -87,96 +98,4 @@ public class UserController
 		}
 
 	}
-
-	// 新增程序员
-	// @RequestMapping("addprogrammer")
-	// public ModelAndView createprogrammer()
-	// {
-	// Map<String, Object> map = new HashMap<String, Object>();
-	//
-	// return new ModelAndView("addprogrammer", map);
-	// }
-
-	// @RequestMapping("addProgrammerResult")
-	// public ModelAndView doAddprogrammer(Programmer programmer, Manager
-	// manager)
-	// {
-	// int count = jurisdictionService.insertProgrammer1(programmer);
-	// Integer id = programmer.getId();
-	// manager.setUserID(id);
-	// manager.setUserEmail(manager.getLoginName());
-	// // System.out.println("id="+id);
-	// jurisdictionService.insertProgrammer2(manager);
-	// return new ModelAndView("programmeraddsuccess");
-	// }
-	//
-	// // 查询程序员
-	// @RequestMapping("resourceManage")
-	// public ModelAndView doResourceManage(Model model)
-	// {
-	// // Map<String,Object> map = new HashMap<String, Object>();
-	// List<Programmer> programmer = jurisdictionService.getprogrammer();
-	// // List<Manager> programmers=jurisdictionService.getprogrammers();
-	// // map.put("programmer", programmer);
-	// model.addAttribute("programmer", programmer);
-	// // model.addAttribute("programmer", programmers);
-	// // System.out.println(programmer.get(0).getUserMobile());
-	// return new ModelAndView("resourceManage");
-	// }
-
-	/*
-	 * @RequestMapping(value = "/resourceManage", method = RequestMethod.GET)
-	 * public ModelAndView addProgrammer(HttpServletRequest request) {
-	 * Map<String,Object> map = new HashMap<String, Object>(); String
-	 * beginIndex= request.getParameter("pager.offset"); int pagerNum =
-	 * Integer.parseInt
-	 * (request.getServletContext().getInitParameter("pagerNum")); int
-	 * count=jurisdictionService.getNum(); List<Programmer> programmer=
-	 * jurisdictionService.getProgrammer(beginIndex, pagerNum); // for(int
-	 * i=0;i<projects.size();i++){ //
-	 * System.out.println(projects.get(i).getProName()); // } //
-	 * System.out.println(count);
-	 * 
-	 * map.put("programmer", programmer); map.put("count", count); return new
-	 * ModelAndView("resourceManage"); }
-	 */
-
-	// 按条件查询程序员
-	// @RequestMapping("programmersearch")
-	// public ModelAndView doprogrammersearch(Model model,
-	// @RequestParam(value = "searchdepartment") Integer searchdepartment)
-	// {
-	// List<Programmer> programmersearch =
-	// jurisdictionService.searchprogrammer();
-	// model.addAttribute("programmersearch", programmersearch);
-	// return new ModelAndView("programmersearch");
-	// }
-
-	// 新增客户
-	// @RequestMapping("addcustomer")
-	// public ModelAndView createcustomer()
-	// {
-	// Map<String, Object> map = new HashMap<String, Object>();
-	//
-	// return new ModelAndView("addcustomer", map);
-	// }
-
-	// 新增管理员
-	// @RequestMapping("addmanager")
-	// public ModelAndView createmanager()
-	// {
-	// Map<String, Object> map = new HashMap<String, Object>();
-	//
-	// return new ModelAndView("addmanager", map);
-	// }
-
-	// 客户管理
-	// @RequestMapping("customermanage")
-	// public ModelAndView creatrecustomermanage()
-	// {
-	// Map<String, Object> map = new HashMap<String, Object>();
-	//
-	// return new ModelAndView("customermanage", map);
-	// }
-
 }

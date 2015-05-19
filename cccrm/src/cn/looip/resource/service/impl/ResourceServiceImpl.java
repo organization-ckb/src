@@ -128,4 +128,10 @@ public class ResourceServiceImpl implements ResourceService
 		return resourceDAO.count();
 	}
 
+	@Override
+	public int Searchcount(int department, int status) {
+	
+		return resourceDAO.Searchcount(department, status);
+	}
+
 }

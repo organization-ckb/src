@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -11,23 +10,36 @@
 	<annotation-driven />
 
 	<resources mapping="/resources/**" location="/resources/" />
-	
-     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	 <beans:property name="defaultEncoding" value="utf-8"/>
-	 <beans:property name="maxUploadSize" value="10485760000"/>
-	 <beans:property name="maxInMemorySize" value="40960"/>
-	 </beans:bean>
-	
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<beans:property name="maxUploadSize" value="10485760000" />
+		<beans:property name="maxInMemorySize" value="40960" />
+	</beans:bean>
+
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
 	<context:component-scan base-package="cn.looip.*.web" />
-	
+
 	<!-- 配置默认页 view-name为页面名 -->
 	<mvc:view-controller path="/" view-name="redirect:/user/login" />
-   
-	
-	
+	<!-- 使用Spring内置的JSON支持  @ResponseBody该方法返回 Java对象,MappingJacksonHttpMessageConverter 会将对象转换为 JSON 输出 -->
+	<beans:bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:bean
+					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></beans:bean>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
+		<property name="messageConverters"> <list> <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" 
+		/> </list> </property> </bean> -->
+
 </beans:beans>

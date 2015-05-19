@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link rel="stylesheet" href="${path}/resources/css/addprogrammer.css" type="text/css"></link>
 <script type="text/javascript" src="${path}/resources/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="${path}/resources/js/addmanager.js"></script>

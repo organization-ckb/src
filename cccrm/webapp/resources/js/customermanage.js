@@ -1,11 +1,3 @@
-/*function gotoPage(url){
-	alert(url);
-	var status=$("#sel_status").val();
-	alert(url+"&status="+status);
-	window.location="http://localhost:8080/cccrm/customer/"+url+"&status="+status;
-	
-	
-}*/
 
 
 $(function(){
