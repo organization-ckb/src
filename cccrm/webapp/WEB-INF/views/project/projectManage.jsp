@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>管理员项目管理</title>
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link type="text/css" rel="stylesheet" media="all"
 	href="../resources/css/global.css" />
 <link type="text/css" rel="stylesheet" media="all"
@@ -129,6 +130,8 @@
 											href="${path}/project/updateProject?id=${project.id}">修改</a>&nbsp;&nbsp;
 								</c:if> 
 								   <c:if test="${old1 == 'old1'||seach=='seach'}">
+								       <a class="btn_delete" id="Arch"
+											href="${path}/project/updateProject?id=${project.id}">修改</a>&nbsp;&nbsp;
 										<a class="btn_delete" onclick="return deleteInfo();"
 											href="${path}/project/delectPros?id=${project.id}">删除</a>
 									</c:if>

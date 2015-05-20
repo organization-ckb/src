@@ -35,4 +35,6 @@ public interface ResourceService {
 	//总条数
 	
 	public int getNum();
+	
+	public int Searchcount(int department,int status);
 }

@@ -42,7 +42,7 @@
 			<result column="programmer_name" property="programmerName" />
 			<result column="programmer_level" property="level" />
 			<result column="programmer_status" property="programmerStatus" />
-			<result column="position" property="position" />
+			<result column="department_name" property="position" />
 		</collection>
 		<collection property="project"
 			ofType="cn.looip.project.repository.domain.Project">
@@ -206,8 +206,8 @@
 
 	<!-- 查询项目成员 方法一不用级联：返回resultMap,返回那些参数，在实体类里面定义相关的属性和get/set 方法二用级联：返回resultMap，association级联，坏处是占资源 -->
 	<select id="getPproject" parameterType="int" resultMap="PprojectMap">
-		select *
-		from programmer_project pp, programmer pg,project p where pp.programmer_id=pg.id and pp.project_id=p.id
+		select  pp.Id as Id,pp.begin_time as begin_time,pp.end_time as end_time,pp.status as status,pp.agree,pp.TimeRecord,pg.id as programmer_id,pg.programmer_name,pg.programmer_level,pg.programmer_status,p.id as project_id,p.pro_contract_pic,d.department_name
+		from programmer_project pp, programmer pg,project p,department d where pp.programmer_id=pg.id and pp.project_id=p.id and d.id=pg.department
 		and project_id=#{id} limit #{pagerIndex},#{pagerNum}
 	</select>
 
@@ -319,22 +319,28 @@
 	 select * from programmer_project where id=#{id}
 	 </select>
 	 
-	 <select id="getPprogramm" parameterType="int" resultType="String">
+	 <select id="getPprogramm" parameterType="int" resultMap="ProgrammerProjectMap">
 	  select * from programmer_project where project_id=#{id}
 	 </select>
 	 
-	 
+	 <!-- 修改已结束的项目状态 -->
 	  <update id="updateProjectStates">
 	   update project set pro_status=0 where pro_end_time&lt;=curdate()
 	 </update>
-	 
+	 <!-- 查询已结束的程序员项目ID和程序员编号 -->
 	 <select id="endTimeprogrammer" resultMap="ProgrammerProjectMap">
 	   select id, programmer_id from programmer_project where end_time&lt;=curdate()  group by  programmer_id
 	 </select>
-	 <!-- 判断是不是最后一次结束时间项目，是则返回ID否则返回空 -->
+	 <!-- 判断是不是最后一次结束时间项目:结束时间=<系统时间代表最后一次项目都已经结束了的ID-->
 	 <select id="getProgrammerID" parameterType="int" resultType="Integer">
 	 select programmer_id from  programmer_project where 
      (select  end_time from  programmer_project where programmer_id=#{id} ORDER by end_time  DESC LIMIT 1) &lt;=curdate()
+     and programmer_id=#{id}  group by  programmer_id
+	 </select>
+	  <!-- 判断是不是最后一次结束时间项目:结束时间>系统时间 代表查到存在进行中的程序员ID-->
+	  <select id="getProgrammersID" parameterType="int" resultType="Integer">
+	 select programmer_id from  programmer_project where 
+     (select  end_time from  programmer_project where programmer_id=#{id} ORDER by end_time  DESC LIMIT 1) &gt;=curdate()
      and programmer_id=#{id}  group by  programmer_id
 	 </select>
 	 <!-- 程序员工作状态修改为空闲 -->
@@ -342,7 +348,15 @@
 	   update programmer set programmer_status=0 where id=#{id}
 	 </update>
 	 
-	 <select id="getPprojectID" parameterType="int"  resultType="int" >
+	 <select id="getPprojectID" parameterType="int"  resultMap ="ProgrammerProjectMap" >
 	 select id from programmer_project where  project_id=#{id}
+	 </select>
+	 
+	 <select id="determineProject" parameterType="map" resultType="Integer">
+	 select id from project where pro_name=#{ProName} and pro_contract_no=#{BargainNo}
+	 </select>
+	 <!-- 防止表单重复分配程序员 -->
+	 <select id="determinePproject" parameterType="int" resultType="Integer">
+	  select id from programmer_project where project_id=#{1} and programmer_id=#{0} and end_time &gt;=curdate()
 	 </select>
 </mapper>

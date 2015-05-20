@@ -273,7 +273,7 @@ public interface ProjectDao {
 	 * @param id
 	 * @return
 	 */
-	public String getPprogramm(int id);
+	public List<ProgrammerProject> getPprogramm(int id);
 	/**
 	 * 修改结束的程序员状态
 	 */
@@ -298,5 +298,15 @@ public interface ProjectDao {
 	  * @param id
 	  * @return
 	  */
-	 public int getPprojectID(int id);
+	 public List<ProgrammerProject> getPprojectID(int id);
+	 /**
+	  * 修改进行中的中程序员状态（移出程序员改变状态）
+	  * @param id
+	  * @return
+	  */
+	 public Integer getProgrammersID(int id);
+	 
+	public Integer determineProject(Map<String, Object> file);
+	
+	public Integer determinePproject(int ProgrammerID,int ProjectID);
 }

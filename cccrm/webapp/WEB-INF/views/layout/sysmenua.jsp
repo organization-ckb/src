@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
+<link rel="Shortcut Icon" href=".../resources/img/icoimg.ico">
 <link rel="stylesheet" type="text/css"
 	href="../resources/static/css/ui2.css?2013032917">
 <link type="text/css" rel="stylesheet" media="all"

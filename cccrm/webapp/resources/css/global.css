@@ -637,6 +637,7 @@ div.columns {
 	font-size: 14px;
 	font-weight: bold;
 	background: #3CB371;
+	outline:medium;
 }
 
 /*-----------项目合同图片页面的右下结束-----------*/
@@ -847,6 +848,7 @@ div.centes {
 	height: 35px;
 	line-height: 35px;
 	text-align: center;
+	outline:medium;
 }
 
 .sortes4 input {
@@ -861,6 +863,7 @@ div.centes {
 	line-height: 35px;
 	text-align: center;
 	cursor: pointer;
+	outline:medium;
 }
 /*-----------项目成员页面的右下内容结束-----------*/
 
@@ -1103,26 +1106,21 @@ box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
 	color: #666;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
+	
 }
 
-.white-pink h1 {
-	font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	padding: 0px 0px 10px 40px;
-	display: block;
-	border-bottom: 1px solid #F5F5F5;
-	margin: -10px -30px 10px -30px;
-	color: #969696;
-}
 
-.white-pink h1>span {
-	display: block;
-	font-size: 11px;
-	color: #C4C2C2;
+.white-pink h1 span {
+	font-size: 13px;
+	text-align: center;
+	color:red;
+	margin-left: 200px;
 }
 
 .white-pink label {
 	display: block;
 	margin: 0px 0px 5px;
+	margin-bottom: 16px; 
 }
 
 .white-pink label>span {
@@ -1132,6 +1130,7 @@ box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
 	padding-right: 10px;
 	margin-top: 10px;
 	color: #969696;
+	
 }
 
 .white-pink input[type="text"], .white-pink input[type="email"],
@@ -1142,7 +1141,6 @@ box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
 	padding: 3px 0px 3px 5px;
 	margin-top: 2px;
 	margin-right: 6px;
-	margin-bottom: 16px;
 	border: 1px solid #e5e5e5;
 	background: #fbfbfb;
 	height: 25px;

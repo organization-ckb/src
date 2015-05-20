@@ -1,3 +1,8 @@
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
+
 #overlay {
 	position: fixed;
 	top: 0;
@@ -9,6 +14,7 @@
 	filter: alpha(opacity = 50);
 	display: none;
 }
+
 #win {
 	position: absolute;
 	top: 50%;
@@ -31,7 +37,6 @@
 	margin: -102px 0 0 -202px;
 	display: none;
 	overflow: hidden;
-	
 }
 
 h2 {
@@ -43,7 +48,6 @@ h2 {
 	border-top: 1px solid #CCC;
 	padding: 5px;
 	cursor: move;
-	
 }
 
 h2 span {
@@ -52,5 +56,4 @@ h2 span {
 	border-left: 1px solid #BBB;
 	right: -3px;
 	padding: 5px 8px;
-	
 }

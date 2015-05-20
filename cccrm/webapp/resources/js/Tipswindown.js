@@ -32,17 +32,16 @@ window.onload = function() {
 			var event = event || window.event;
 			var iL = event.clientX - disX;
 			var iT = event.clientY - disY;
-			var maxL = document.body.clientWidth - oWin.offsetWidth;
-			var maxT = document.body.clientHeight
-					- oWin.offsetHeight;
+			var maxL = document.documentElement.clientWidth - oWin.offsetWidth;
+			var maxT = document.documentElement.clientHeight - oWin.offsetHeight;
 			iL = iL < 0 ? 0 : iL;
 			iL = iL > maxL ? maxL : iL;
 			iT = iT < 0 ? 0 : iT;
 			iT = iT > maxT ? maxT : iT;
 			oWin.style.marginTop = oWin.style.marginLeft = 0;
 			oWin.style.left = iL + "px";
-			oWin.style.right = iL + "px";
 			oWin.style.top = iT + "px";
+			
 			return false
 		};
 		document.onmouseup = window.onblur = oH2.onlosecapture = function() {

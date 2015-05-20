@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>管理员信息</title>
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link type="text/css" rel="stylesheet" media="all" href="${path}/resources/css/global.css" />
 <link type="text/css" rel="stylesheet" media="all" href="${path}/resources/css/global_color.css" />
 <script src="${path}/resources/laydate/laydate.js"></script> 
@@ -50,7 +51,10 @@ $(function(){
 					<c:if test="${project.status == 1}">
 				       <c:set var="m" value="checked" />
 			         </c:if>
-					<c:if test="${project.status == 2}">
+			         <c:if test="${project.status == 2}">
+				       <c:set var="m" value="checked" />
+			         </c:if>
+					<c:if test="${project.status == 0}">
 				       <c:set var="f" value="checked"/>
 			         </c:if>
 					<input name="status" type="radio" class="radios" value="1" ${m}>未完成

@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CRM系统</title>
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link rel="stylesheet" href="../resources/css/global.css"
 	type="text/css" />
 <script type="text/javascript" src="../resources/js/jquery-1.8.2.min.js"></script>
@@ -102,10 +103,20 @@
 						</c:forEach>
 					</table>
 				</div>
+				<c:if test="${search=='search'}">
+				 <c:set var="url" value="${path}/resource/programmerSearch"></c:set>
+				</c:if>
+				<c:if test="${search!='search'}">
+				<c:set var="url" value="${path}/resource/resourceManage"></c:set>
+				</c:if>	
 				   <div id="pages">
 				   	<pg:pager items="${count}" export="currentPageNumber=pageNumber"
 						maxPageItems="${initParam.pagerNumes}" maxIndexPages="5"
-						isOffset="true" url="${path}/resource/resourceManage">	
+						isOffset="true" url="${url}">
+						<c:if test="${search=='search'}">
+						<pg:param name="department" value="${department}" />
+						<pg:param name="status" value="${status}" />
+						</c:if>	
 						<pg:prev>
 							<a class="current_page" href="${pageUrl}">前页</a>
 						</pg:prev>

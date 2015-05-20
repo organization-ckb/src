@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/layout/head.jsp" />

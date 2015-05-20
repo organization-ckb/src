@@ -12,10 +12,14 @@
 	<bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+
 		<property name="url"
 			value="jdbc:mysql://112.65.46.6:63306/cccrm?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
 		<property name="username" value="root" />
 		<property name="password" value="chichuang123" />
+		<!-- <property name="url" value="jdbc:mysql://localhost:3306/cccrm?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" 
+			/> <property name="username" value="root" /> <property name="password" value="root" 
+			/> -->
 	</bean>
 
 	<!--用连接池 配置DataSource <bean id="datasource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
@@ -35,7 +39,7 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 
-	<!-- 该mapper将自动对标注@Autowired的Bean进行注入 -->
+	<!-- 将自动对标注@Autowired的Bean进行注入该mapper -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="cn.looip.project.repository.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
@@ -46,11 +50,15 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 
- 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-       		<property name="basePackage" value="cn.looip.customer.repository.dao" />  
-       		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/> 
-    	</bean>
-    
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.looip.customer.repository.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.looip.wap.repository.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
 	<!-- spring 事务管理 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -10,12 +10,9 @@
 <title>登录</title>
 <link rel="stylesheet" href="${path}/resources/css/login.css"
 	type="text/css" />
-<!-- <link rel="stylesheet" href="<c:url value="/resources/css/resourcemanage.css" />"
-	type="text/css" /> -->
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link rel="stylesheet" href="../resources/css/global.css"
 	type="text/css" />
-	
-<!-- <link rel="stylesheet" href="../resources/css/global_color.css" type="text/css"/> -->
 <script type="text/javascript" src="${path}/resources/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="${path}/resources/js/cookie.min.js"></script>
 <script type="text/javascript" src="${path}/resources/js/login.js"></script>

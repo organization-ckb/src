@@ -57,7 +57,7 @@ public class CustomerController {
 	
 	//查询所有客户
 	@RequestMapping(value="customerManage" )
-	public ModelAndView customerManage(Model model, HttpServletRequest request,HttpSession session,String mark)
+	public ModelAndView customerManage(Model model,HttpServletRequest request,HttpSession session,String mark)
 	{  
 		if(mark!=null){
 		 session.setAttribute("mark", mark);
@@ -68,7 +68,6 @@ public class CustomerController {
 		
 		int count = customerService.getNum();
 		List<Customer> customer = customerService.getCustomers(beginIndex, pagerNum);
-			//System.out.println("客户总条数="+count);
 			model.addAttribute("customers", customer);
 			model.addAttribute("count", count);
 			model.addAttribute("allcustomers", "allcustomers");

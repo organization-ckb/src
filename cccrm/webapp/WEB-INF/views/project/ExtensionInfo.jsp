@@ -6,21 +6,12 @@
 <html>
 <head>
 <title>项目续约记录</title>
+<link rel="Shortcut Icon" href="../resources/img/icoimg.ico">
 <link type="text/css" rel="stylesheet" media="all"
 	href="../resources/css/global.css" />
 <link type="text/css" rel="stylesheet" media="all"
 	href="../resources/css/global_color.css" />
 <script type="text/javascript" src="../resources/js/jquery-1.8.2.min.js"></script>
-
-<script type="text/javascript">
-	function deleteInfo() {
-		if (confirm("确定要删除此商品信息吗？\r\n删除后将不能恢复!")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-</script>
 </head>
 <body>
 	<!--Logo区域开始-->

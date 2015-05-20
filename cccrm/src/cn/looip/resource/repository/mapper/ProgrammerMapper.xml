@@ -82,5 +82,17 @@
 	<select id="getPageProgrammer" parameterType="int" resultMap="ProgrammerMap">
 		select * from programmer limit #{pagerIndex},#{pagerNum}
 	</select>
-
+    <select id="Searchcount" parameterType="int" resultType="int">
+     select  count(*) 
+		from programmer 
+		left join sys_user on programmer.id = sys_user.user_id 
+		where sys_user.user_type = 1 
+		<if test="department != -1" >
+		and programmer.department = #{department} 
+		</if>
+		<if test="status != -1" >
+		and programmer.programmer_status = #{status}
+		</if>
+    </select>
+    
 </mapper>

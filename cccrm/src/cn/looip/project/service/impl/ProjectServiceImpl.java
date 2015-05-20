@@ -2,7 +2,6 @@ package cn.looip.project.service.impl;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -23,10 +22,9 @@ import cn.looip.project.service.interfaces.ProjectService;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
-	// 持久化接口
 	@Autowired
 	private ProjectDao projectdao;
-	// 工具类
+
 	@Autowired
 	private GeneralTools iTools;
 
@@ -40,41 +38,29 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectdao.getCustomer();
 	}
 
-	/**
-	 * 查询当前项目
-	 */
 	@Override
 	public List<Project> getProjects(String beginIndex, int pagerNum) {
 		int index = 0;
 		if (beginIndex != null) {
-			index = Integer.parseInt(beginIndex);// 将字符串转换为int型（整型）
+			index = Integer.parseInt(beginIndex);
 		}
 		return projectdao.getProjects(index, pagerNum);
 	}
 
-	/**
-	 * 查询历史项目
-	 */
 	@Override
 	public List<Project> getProjectes(String beginIndex, int pagerNum) {
 		int index = 0;
 		if (beginIndex != null) {
-			index = Integer.parseInt(beginIndex);// 将字符串转换为int型（整型）
+			index = Integer.parseInt(beginIndex);
 		}
 		return projectdao.getProjectes(index, pagerNum);
 	}
 
-	/**
-	 * 当前项目总条数
-	 */
 	@Override
 	public int getNum() {
 		return projectdao.getNum();
 	}
 
-	/**
-	 * 历史项目总条数
-	 */
 	@Override
 	public int getNums() {
 
@@ -92,9 +78,6 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectdao.getProject(id);
 	}
 
-	/**
-	 * 删除某项目
-	 */
 	@Override
 	public void delectProject(int id) {
 		projectdao.delectProject(id);
@@ -105,7 +88,7 @@ public class ProjectServiceImpl implements ProjectService {
 			String proName) {
 		int index = 0;
 		if (beginIndex != null) {
-			index = Integer.parseInt(beginIndex);// 将字符串转换为int型（整型）
+			index = Integer.parseInt(beginIndex);
 		}
 		return projectdao.getSeach(index, pagerNum, proName);
 	}
@@ -116,9 +99,6 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectdao.getNumes(proName);
 	}
 
-	/**
-	 * 查询闲置程序员
-	 */
 	@Override
 	public List<Programmer> programmer() {
 
@@ -129,12 +109,13 @@ public class ProjectServiceImpl implements ProjectService {
 	public void saveProgrammers(ProgrammerProject Pproject) {
 		projectdao.saveProgrammers(Pproject);
 	}
-    
+
+	/*
+	 * 根据当前状态改为相反状态
+	 * 
+	 */
 	@Override
 	public void updateState(int id, int State) {
-		/*
-		 * 修改状态
-		 */
 		if (State == 0) {
 			State = 1;
 		} else {
@@ -148,14 +129,14 @@ public class ProjectServiceImpl implements ProjectService {
 			int id) {
 		int index = 0;
 		if (beginIndex != null) {
-			index = Integer.parseInt(beginIndex);// 将字符串转换为int型（整型）
+			index = Integer.parseInt(beginIndex);
 		}
 		return projectdao.getPproject(index, pagerNum, id);
 	}
 
 	@Override
 	public int getNumber(int id) {
-		
+
 		return projectdao.getNumber(id);
 	}
 
@@ -195,7 +176,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> getCProject(String beginIndex, int pagerNum, int id) {
 		int index = 0;
 		if (beginIndex != null) {
-			index = Integer.parseInt(beginIndex);// 将字符串转换为int型（整型）
+			index = Integer.parseInt(beginIndex);
 		}
 		return projectdao.getCProject(index, pagerNum, id);
 	}
@@ -211,31 +192,27 @@ public class ProjectServiceImpl implements ProjectService {
 			int pagerNum, int id) {
 		int index = 0;
 		if (beginIndex != null) {
-			index = Integer.parseInt(beginIndex);// 将字符串转换为int型（整型）
+			index = Integer.parseInt(beginIndex);
 		}
 		return projectdao.getPprojects(index, pagerNum, id);
 	}
 
-	/**
-	 * 返回ID+1
-	 */
 	@Override
 	public int getFinalid() {
-		if(projectdao.getFinalid()==null){
+		if (projectdao.getFinalid() == null) {
 			return 1;
+		} else {
+			int id = (int) projectdao.getFinalid().get("id");
+			return id + 1;
 		}
-		else{
-			int id= (int) projectdao.getFinalid().get("id");
-			return id+1;
-		}
-		
+
 	}
 
 	@Override
 	public List<ProgrammerProject> getRecord(String beginIndex, int pagerNum) {
 		int index = 0;
 		if (beginIndex != null) {
-			index = Integer.parseInt(beginIndex);// 将字符串转换为int型（整型）
+			index = Integer.parseInt(beginIndex);
 		}
 		return projectdao.getRecord(index, pagerNum);
 	}
@@ -249,21 +226,12 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void updateContract(int id, int extensionTime, int RemainingTime,
 			java.util.Date timeRecord) {
-
-		/*
-		 * 当用户工作结束，续约天数目前是，
-		 * 已当日同意的系统时间为准相加；
-		 */
-
 		if (RemainingTime == 0) {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar c = Calendar.getInstance();
-			//c.setTime(timeRecord);// 加上这句则已续约时间为准
-			String date = sf.format(c.getTime());// 开始时间
-			// System.out.println(date);
+			String date = sf.format(c.getTime());
 			c.add(Calendar.DAY_OF_MONTH, extensionTime);
-			String dates = sf.format(c.getTime());// 加过天数的结束时间
-			// System.out.println(dates);
+			String dates = sf.format(c.getTime());
 			Date begindate = Date.valueOf(date);
 			Date enddate = Date.valueOf(dates);
 			projectdao.updateContract(id, begindate, enddate);
@@ -275,8 +243,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public void saveFiles(int id,String fileName) {
-		Map<String, Object> map=new HashMap<String, Object>();
+	public void saveFiles(int id, String fileName) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
 		map.put("fileName", fileName);
 		projectdao.saveFiles(map);
@@ -284,42 +252,42 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public String imgNumber(int id) {
-		
+
 		return projectdao.imgNumber(id);
 	}
 
 	@Override
 	public String getcustomerName(int id) {
-	
+
 		return projectdao.getcustomerName(id);
 	}
 
 	@Override
 	public String getprogrammerName(int id) {
-		
+
 		return projectdao.getprogrammerName(id);
 	}
 
 	@Override
-	public void updateProjectState(int id,int State) {
-		if(State==1||State==2){
-			State=2;
+	public void updateProjectState(int id, int State) {
+		if (State == 1 || State == 2) {
+			State = 2;
 		}
-		if(State==3){
-			State=1;
+		if (State == 3) {
+			State = 1;
 		}
-		
-		projectdao.updateProjectState(id,State);
+
+		projectdao.updateProjectState(id, State);
 	}
 
 	@Override
 	public String getPprogrammer(int id) {
-	
+
 		return projectdao.getPprogrammer(id);
 	}
 
 	@Override
-	public String getPprogramm(int id) {
+	public  List<ProgrammerProject> getPprogramm(int id) {
 		return projectdao.getPprogramm(id);
 	}
 
@@ -344,8 +312,29 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public int getPprojectID(int id) {
+	public List<ProgrammerProject> getPprojectID(int id) {
 		return projectdao.getPprojectID(id);
+	}
+
+	@Override
+	public Integer getProgrammersID(int id) {
+		
+		return projectdao.getProgrammersID(id);
+	}
+
+	@Override
+	public Integer determineProject(String ProName, String BargainNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("ProName", ProName);
+		map.put("BargainNo", BargainNo);
+		return projectdao.determineProject(map);
+		
+	}
+
+	@Override
+	public Integer determinePproject(int ProgrammerID, int ProjectID) {
+		
+		return projectdao.determinePproject(ProgrammerID, ProjectID);
 	}
 
 }
