@@ -1,4 +1,4 @@
-package cn.looip.test;
+package cn.looip;
 public class tt {
 
 }
