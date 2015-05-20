@@ -14,38 +14,27 @@ import cn.looip.wap.service.interfaces.WapService;
 @Controller
 @RequestMapping("/wap")
 public class WapController {
-	
-  @Autowired
-  private WapService wapservice;
-  
- 
-  @RequestMapping("/login")
-  @ResponseBody
-  public Map<String, String> getjson(SysUser user) throws Exception
-  {
-	  String username=user.getLoginName();
-	  String password=user.getLoginPwd();
-	  Map<String, String> map = new HashMap<String, String>();
 
-	  if("".equals(username)||"".equals(password)){
-		  map.put("resultcode", "0");
-	  }
-	  else{
-	      if(wapservice.getLogin(user))
-	      {
-	          map.put("results", "success");
-	      }
-	      else
-	      {
-	          map.put("results", "error");
-	          
-	      } 
-	      map.put("resultcode", "200"); 
-	      
-	  }
-     
-	  return map;
-     
-  }
-  
+	@Autowired
+	private WapService wapservice;
+
+	@RequestMapping("/login")
+	@ResponseBody
+	public Map<String, String> getjson(SysUser user) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		try {
+			if (wapservice.getLogin(user)) {
+				map.put("results", "1");
+			} else {
+				map.put("results", "0");
+			}
+			map.put("resultcode", "200");
+		} catch (Exception e) {
+			map.put("resultcode", "0");
+		}
+
+		return map;
+
+	}
+
 }
