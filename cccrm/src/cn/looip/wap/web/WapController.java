@@ -20,7 +20,7 @@ public class WapController {
 
 	@RequestMapping("/login")
 	@ResponseBody
-	public Map<String, String> getjson(SysUser user) throws Exception {
+	public Map<String, String> getjson(SysUser user) {
 		Map<String, String> map = new HashMap<String, String>();
 		try {
 			if (wapservice.getLogin(user)) {
