@@ -48,5 +48,9 @@ public interface JurisdictionDAO {
 	public int updateSysUserByProgrammer(SysUser user);
 	//更新客户
 	public int updateSysUserByCustomer(SysUser sysUser);
+	
+	//验证邮箱接口
+	public Integer getUserEmail(String email);
+	
 }
 
