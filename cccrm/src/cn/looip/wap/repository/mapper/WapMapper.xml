@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.looip.wap.repository.dao.WapDao">
+
+<resultMap type="cn.looip.wap.repository.domain.Project" id="projectMap">
+<result column="id"  property="id"/>
+<result column="pro_name"  property="proName"/>
+<result column="pro_begin_time"  property="starttime"/>
+<result column="pro_end_time"  property="endtime"/>
+<result column="pro_status"  property="status"/>
+</resultMap>
+
 <select id="getUserName" parameterType="String" resultType="Integer">
 select id from sys_user where login_name=#{0} 
 </select>
+
 <select id="getLogin" parameterType="String" resultType="Integer">
 select id from sys_user where login_name=#{0} and login_pwd=#{1}
+</select>
+
+<select id="getProjects" parameterType="int" resultMap="projectMap">
+select id,pro_name,pro_begin_time,pro_end_time,pro_status from project where customer_id=#{id}  ORDER by pro_begin_time DESC
 </select>
 </mapper>
