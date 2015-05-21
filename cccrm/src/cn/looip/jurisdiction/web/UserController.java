@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.looip.core.utils.Utils;
@@ -31,6 +32,30 @@ public class UserController
 	@Autowired
 	private ProjectService proservice;
 
+	
+	@RequestMapping("/checkEmail")
+	@ResponseBody
+	public Map<String, String> getjson(SysUser user) {
+		Map<String, String> map = new HashMap<String, String>();
+		try {
+			System.out.println(jurisdictionService.getUserEmail(user));
+			if (jurisdictionService.getUserEmail(user)) {
+				map.put("results", "1");
+			} else {
+				map.put("results", "0");
+			}
+			map.put("resultcode", "200");
+		} catch (Exception e) {
+			map.put("resultcode", "0");
+		}
+		
+		return map;
+
+	}
+
+
+	  
+	
 	@RequestMapping(value = "/home")
 	public ModelAndView home()
 	{
@@ -96,6 +121,6 @@ public class UserController
 			model.addAttribute("msg", "用户名/密码错误");
 			return new ModelAndView("user/login");
 		}
-
 	}
+	
 }

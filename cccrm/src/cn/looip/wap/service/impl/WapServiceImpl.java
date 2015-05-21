@@ -27,7 +27,7 @@ public class WapServiceImpl implements WapService {
 		}
 		return false;
 	}
-
+	
 
 
 	@Override
