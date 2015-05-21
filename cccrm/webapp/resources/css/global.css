@@ -17,7 +17,10 @@ body {
 	background-position: top;
 	background-repeat: repeat-x;
 }
-
+select{
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+}
 table {
 	border-collapse: collapse;
 	border-spacing: 0px;
@@ -384,6 +387,7 @@ div.search_add {
 	margin-left: 150px;
 	width: 250px;
 	margin-top: 10px;
+	
 }
 
 div.search_add input[type="submit"], input[type="button"], button {
@@ -423,6 +427,10 @@ div.search_add input[type="submit"]:hover {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3CB371',
 		endColorstr='#3CB371');
 	background-color: #3CB371;
+}
+
+div.search_add input[type="text"]{
+   border: #CCC solid 1px;
 }
 
 /*正文部分*/
@@ -1211,6 +1219,7 @@ box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
 	line-height: 15px;
 	height: 30px;
 	outline: none;
+	position: relative;
 }
 
 div.messll {

@@ -75,7 +75,7 @@
 
 						<form action="${path}/project/seachPros" method="post">
 							<input type="text" placeholder="请输入项目名称" name="proName"
-								class="search"> <input type="submit"  value="搜索">
+								class="search" > <input type="submit"  value="搜索">
 						</form>
 
 					</div>
