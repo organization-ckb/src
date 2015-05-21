@@ -21,51 +21,61 @@
 		}
 	}
 	function over() {
-		$("#first").css({"background":"#fff","color":"#697d84"});
+		$("#first").css({
+			"background" : "#fff",
+			"color" : "#697d84"
+		});
 	}
 	function overes() {
-		$("#first").css({"background":"#3CB371","color":"#fff"}); 
+		$("#first").css({
+			"background" : "#3CB371",
+			"color" : "#fff"
+		});
 	}
-	$(function () {
-        $("#big").mouseover(function () {
-        	$("#smalls").show();//表示display:block, 
-    		
-        });
-        $("#big").mouseleave(function () {
-        	$("#smalls").hide();//表示display:none; 
-        });
-    });
+	$(function() {
+		$("#big").mouseover(function() {
+			$("#smalls").show();//表示display:block, 
+
+		});
+		$("#big").mouseleave(function() {
+			$("#smalls").hide();//表示display:none; 
+		});
+	});
 </script>
 </head>
 <body>
 	<!--Logo区域开始-->
 	<div id="header">
-		<img src="../resources/img/logo.png" class="imglogo" alt="logo" />
-	      <div>
-		<img  class="headerimg" src="../resources/img/manager.png"> 
-		<a>${sessionScope.nickname}</a>
-		<img  class="headerimg" src="../resources/img/cancel.png"> 
-		<a href="${path}/project/logout">注销</a>
-       </div>
-      
+		<div class="headlogo">
+			<img src="${path}/resources/img/logo.png"  alt="logo" />
+		</div>
+		<div class="headerinfo">
+			<c:if test="${sessionScope.nickname!=null}">
+				<img class="headerimg" src="../resources/img/manager.png">
+				<a>${sessionScope.nickname}</a>
+				<img class="headerimg" src="../resources/img/cancel.png">
+				<a href="${path}/project/logout">注销</a>
+			</c:if>
+		</div>
 	</div>
 
 	<!--主要区域开始-->
 	<div id="main">
 		<div id="mains">
 			<div id="contents">
-			<jsp:include page="/WEB-INF/views/layout/sysmenua.jsp" />
+				<jsp:include page="/WEB-INF/views/layout/sysmenua.jsp" />
 			</div>
 			<div id="record">
 
-				<div id="subfield"><!-- 分栏 --></div>
+				<div id="subfield">
+					<!-- 分栏 -->
+				</div>
 				<c:if test="${sessionScope.loginUser.userType==0}">
 					<div class="search_add">
 
 						<form action="${path}/project/seachPros" method="post">
 							<input type="text" placeholder="请输入项目名称" name="proName"
-								class="search"> <input type="submit" 
-								value="搜索">
+								class="search"> <input type="submit"  value="搜索">
 						</form>
 
 					</div>
@@ -105,40 +115,44 @@
 							<fmt:formatDate var="endtime" value="${project.endtime}"
 								type="both" pattern="yyyy-MM-dd " />
 							<tr id="tres">
-								<td>
-								<a href="${path}/project/ProjectInfo?id=${project.id}"
-								   class="btn_delete">${project.proName}</a>
-								</td>
+								<td><a href="${path}/project/ProjectInfo?id=${project.id}"
+									class="btn_delete">${project.proName}</a></td>
 								<td>${starttime}</td>
 								<td>${endtime}</td>
 								<td><c:choose>
 										<c:when test="${project.status == 2}">
 				                                                                                进行中
 			                           </c:when>
-			                           <c:when test="${project.status == 0}">
+										<c:when test="${project.status == 0}">
 				                                                                               完成
 			                           </c:when>
 										<c:otherwise>
 				                                                                               待分配
 			                           </c:otherwise>
 									</c:choose></td>
-								<td class="td_modi">
-								<c:if test="${new1 == 'new1'||seach=='seach'}">
-								 <a class="btn_delete"
+								<td class="td_modi"><c:if test="${new1 == 'new1'}">
+										<a class="btn_delete"
 											href="${path}/project/addProgrammer?id=${project.id}">分配人员</a>&nbsp;&nbsp;
 								  <a class="btn_delete" id="Arch"
 											href="${path}/project/updateProject?id=${project.id}">修改</a>&nbsp;&nbsp;
-								</c:if> 
-								   <c:if test="${old1 == 'old1'||seach=='seach'}">
-								       <a class="btn_delete" id="Arch"
+								</c:if> <c:if test="${old1 == 'old1'}">
+										<a class="btn_delete" id="Arch"
 											href="${path}/project/updateProject?id=${project.id}">修改</a>&nbsp;&nbsp;
 										<a class="btn_delete" onclick="return deleteInfo();"
+											href="${path}/project/delectPros?id=${project.id}">删除</a>
+									</c:if> 
+									<c:if test="${seach=='seach'}">
+										<a class="btn_delete"
+											href="${path}/project/addProgrammer?id=${project.id}">分配人员</a>&nbsp;&nbsp;
+									<a class="btn_delete" id="Arch"
+											href="${path}/project/updateProject?id=${project.id}">修改</a>&nbsp;&nbsp;
+											<a class="btn_delete" onclick="return deleteInfo();"
 											href="${path}/project/delectPros?id=${project.id}">删除</a>
 									</c:if>
 									 <c:if test="${loginUser.userType==2}">
 										<a class="btn_delete"
 											href="${path}/project/ProjectInfo?id=${project.id}">项目详情</a>
-									 </c:if></td>
+									</c:if></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -149,7 +163,7 @@
 
 				<!--分页-->
 				<div id="pages">
-				
+
 					<c:if test="${new1 == 'new1'}">
 						<c:set var="a" value="${path}/project/projectManage" />
 					</c:if>
@@ -163,12 +177,12 @@
 						maxPageItems="${initParam.pagerNum}" maxIndexPages="5"
 						isOffset="true" url="${a}">
 						<pg:prev>
-							<a class="current_page" href="${pageUrl}"> &lt;上一页  </a>
+							<a class="current_page" href="${pageUrl}"> &lt;上一页 </a>
 						</pg:prev>
 						<pg:pages>
 							<c:choose>
 								<c:when test="${currentPageNumber eq pageNumber}">
-									<a >${pageNumber}</a>
+									<a>${pageNumber}</a>
 								</c:when>
 								<c:otherwise>
 									<a class="current_page" href="${pageUrl}">${pageNumber}</a>
@@ -179,7 +193,7 @@
 							<a class="current_page" href="${pageUrl}">下一页&gt;</a>
 						</pg:next>
 					</pg:pager>
-				
+
 				</div>
 
 			</div>

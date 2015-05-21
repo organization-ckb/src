@@ -45,10 +45,16 @@ public class WapController {
 
 	@RequestMapping("/getprojet") 
 	@ResponseBody
-	public Map<String, List<Project>> getProjects(int id) {
-		List<Project> Projects = wapservice.getProjects(id);
-		Map<String, List<Project>> map = new HashMap<String, List<Project>>();
-		map.put("projects", Projects);
+	public Map<String, Object> getProjects(int id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		 try {
+				List<Project> Projects = wapservice.getProjects(id);
+				map.put("projects", Projects);
+				map.put("resultcode", "200");
+		} catch (Exception e) {
+			map.put("resultcode", "0");
+		}
+	
 		return map;
 	}
 

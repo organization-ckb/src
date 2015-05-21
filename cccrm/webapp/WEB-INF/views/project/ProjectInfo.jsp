@@ -121,14 +121,18 @@
 </script>
 </head>
 <body>
-
 	<!--Logo区域开始-->
 	<div id="header">
-		<img src="../resources/img/logo.png" class="imglogo" alt="logo" />
-		<div>
-			<img class="headerimg" src="../resources/img/manager.png"> <a>${sessionScope.nickname}</a>
-			<img class="headerimg" src="../resources/img/cancel.png"> <a
-				href="${path}/project/logout">注销</a>
+		<div class="headlogo">
+			<img src="${path}/resources/img/logo.png"  alt="logo" />
+		</div>
+		<div class="headerinfo">
+			<c:if test="${sessionScope.nickname!=null}">
+				<img class="headerimg" src="../resources/img/manager.png">
+				<a>${sessionScope.nickname}</a>
+				<img class="headerimg" src="../resources/img/cancel.png">
+				<a href="${path}/project/logout">注销</a>
+			</c:if>
 		</div>
 	</div>
 	<!--主要区域开始-->
@@ -265,7 +269,7 @@
 															name="project.id" value="${project.id}"> <input
 															type="hidden" name="programmer.programmerStatus"
 															value="${pp.programmer.programmerStatus}"> <input
-															type="submit" value="移出项目">
+															type="submit" style="border: none;" value="移出项目">
 													</div>
 												</c:if>
 												<c:if test="${project.status==0}">
@@ -277,7 +281,7 @@
 														<a>${days}</a>（天）
 													</div>
 													<div class="sortes4">
-														<input type="button" style="cursor: default" value="项目已结束">
+														<input type="button" style="cursor: default;border: none;" value="项目已结束">
 													</div>
 												</c:if>
 											</div>
@@ -333,14 +337,14 @@
 							<c:forTokens var="Pprojectes" items="${project.proImage}"
 								delims="*">
 								<div class="image">
-									<a href="/contractImgs/${Pprojectes}"> <img
-										src="/contractImgs/${Pprojectes}" />
+									<a href="/contractImgs/${Pprojectes}" > <img
+										src="/contractImgs/${Pprojectes}" border="0"/>
 									</a>
 								</div>
 							</c:forTokens>
 							<c:if test="${imgnums!=8 }">
 								<div class="images">
-									<img id="play" src="../resources/img/imgs.png" />
+									<img id="play" src="../resources/img/imgs.png" border="0"/>
 								</div>
 							</c:if>
 							<div id="win">

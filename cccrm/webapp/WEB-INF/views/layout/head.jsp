@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,14 +17,17 @@
 <body>
 	<!--Logo区域开始-->
 	<div id="header">
-		<img src="${path}/resources/img/logo.png" class="imglogo" alt="logo" />
-		<c:if test="${sessionScope.nickname!=null}">
-		<div>
-			<img class="headerimg" src="../resources/img/manager.png"> <a>${sessionScope.nickname}</a>
-			<img class="headerimg" src="../resources/img/cancel.png"> <a
-				href="${path}/project/logout">注销</a>
+		<div class="headlogo">
+			<img src="${path}/resources/img/logo.png"  alt="logo" />
 		</div>
-		</c:if>
+		<div class="headerinfo">
+			<c:if test="${sessionScope.nickname!=null}">
+				<img class="headerimg" src="../resources/img/manager.png">
+				<a>${sessionScope.nickname}</a>
+				<img class="headerimg" src="../resources/img/cancel.png">
+				<a href="${path}/project/logout">注销</a>
+			</c:if>
+		</div>
 	</div>
 </body>
 </html>
