@@ -31,7 +31,6 @@ public class WapController {
 				Integer id = wapservice.getUserName(user.getLoginName());
 				String ids = id.toString();
 				map.put("id", ids);
-
 			} else {
 				map.put("results", "0");
 			}
