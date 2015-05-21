@@ -50,7 +50,7 @@ public interface JurisdictionDAO {
 	public int updateSysUserByCustomer(SysUser sysUser);
 	
 	//验证邮箱接口
-	public Integer getUserEmail(String email);
+	public Integer getUserEmail(String userEmail);
 	
 }
 

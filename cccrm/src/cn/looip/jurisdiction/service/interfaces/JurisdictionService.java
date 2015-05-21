@@ -22,4 +22,7 @@ public interface JurisdictionService {
 
 	public int insertSysUserByCustomer(SysUser sysUser);
 	
+	
+	//验证邮箱接口
+	public boolean getUserEmail(SysUser user);
 }
