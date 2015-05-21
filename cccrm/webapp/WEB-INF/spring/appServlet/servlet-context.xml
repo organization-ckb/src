@@ -15,9 +15,8 @@
 				<beans:property name="objectMapper" ref="customObjectMapper"></beans:property>
 			</beans:bean>
 		</mvc:message-converters>
-
 	</mvc:annotation-driven>
-
+	
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<beans:bean id="multipartResolver"
