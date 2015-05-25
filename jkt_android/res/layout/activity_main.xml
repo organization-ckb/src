@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <view
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.0"
+        class="com.looip.crm.view.MyViewPager" />
+
+    <View
+        android:id="@+id/line_radiotop"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#bcbcbc" />
+
+    <RadioGroup
+        android:id="@+id/rg_main_radio"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="#00000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="2dp" >
+
+        <RadioButton
+            android:id="@+id/rb_robot"
+            style="@style/main_tab_bottom"
+            android:drawableTop="@drawable/icon_robot"
+            android:text="@string/robot" />
+
+        <RadioButton
+            android:id="@+id/rb_myproject"
+            style="@style/main_tab_bottom"
+            android:drawableTop="@drawable/icon_myproject"
+            android:text="@string/myproject" />
+
+        <RadioButton
+            android:id="@+id/rb_videosession"
+            style="@style/main_tab_bottom"
+            android:drawableTop="@drawable/icon_videosession"
+            android:text="@string/videosession" />
+
+        <RadioButton
+            android:id="@+id/rb_servicetel"
+            style="@style/main_tab_bottom"
+            android:drawableTop="@drawable/icon_servicecall"
+            android:text="@string/servicetel" />
+    </RadioGroup>
+
+</LinearLayout>
