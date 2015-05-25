@@ -33,7 +33,7 @@ import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
 import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 
 /**
- * 一些工具
+ * 一些常用工具类
  * 
  * @author lixingtao
  * 

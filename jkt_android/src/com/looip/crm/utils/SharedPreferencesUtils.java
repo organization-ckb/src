@@ -31,6 +31,7 @@ public class SharedPreferencesUtils {
 		sp.edit().putString(key, value).commit();
 	}
 
+	
 	/**
 	 * 获取字符串
 	 * 
@@ -48,6 +49,7 @@ public class SharedPreferencesUtils {
 		return sp.getString(key, defValue);
 	}
 
+	
 	/**
 	 * 保存boolean类型到sharedPrefrence
 	 * 
@@ -65,6 +67,7 @@ public class SharedPreferencesUtils {
 		sp.edit().putBoolean(key, value).commit();
 	}
 
+	
 	/**
 	 * 获取boolean类型值
 	 * 
