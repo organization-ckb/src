@@ -23,8 +23,18 @@ public class JurisdictionServiceImpl implements JurisdictionService {
 	@Autowired
 	private GeneralTools iTools ;
 	
+	//验证邮箱接口
+	@Override
+	public boolean getUserEmail(SysUser user) {
+		if(jurisdictionDAO.getUserEmail(user.getUserEmail()) != null){
+				return true;
+		}
+		
+		return false;
+	}
 
-
+	
+	
 	public boolean checkLogin(String loginName, String loginPwd) {
 		boolean isSuccess = false;
 		SysUser sysUser = jurisdictionDAO.selectUserByLogin(loginName,loginPwd);
@@ -73,7 +83,6 @@ public class JurisdictionServiceImpl implements JurisdictionService {
 		// TODO Auto-generated method stub
 		return jurisdictionDAO.insertSysUserByCustomer(sysUser);
 	}
-	
-	}
+ 	}
 
 

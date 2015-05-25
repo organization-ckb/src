@@ -7,8 +7,16 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<annotation-driven />
-
+	<mvc:annotation-driven>
+		<!-- springmvc  json@ResponseBody注解增加全局 格式化日期，customObjectMapper定义的格式化日期文件在cn.looip.core.utils目录下 -->
+		<mvc:message-converters>
+			<beans:bean
+				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+				<beans:property name="objectMapper" ref="customObjectMapper"></beans:property>
+			</beans:bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<beans:bean id="multipartResolver"
@@ -28,18 +36,6 @@
 
 	<!-- 配置默认页 view-name为页面名 -->
 	<mvc:view-controller path="/" view-name="redirect:/user/login" />
-	<!-- 使用Spring内置的JSON支持  @ResponseBody该方法返回 Java对象,MappingJacksonHttpMessageConverter 会将对象转换为 JSON 输出 -->
-	<beans:bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<beans:property name="messageConverters">
-			<beans:list>
-				<beans:bean
-					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></beans:bean>
-			</beans:list>
-		</beans:property>
-	</beans:bean>
-	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
-		<property name="messageConverters"> <list> <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" 
-		/> </list> </property> </bean> -->
+
 
 </beans:beans>

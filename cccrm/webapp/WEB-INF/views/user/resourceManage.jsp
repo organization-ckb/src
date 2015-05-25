@@ -17,14 +17,21 @@
 </head>
 <body>
 	<!--Logo区域开始-->
-	<div id="header">
-		<img src="../resources/img/logo.png" class="imglogo" alt="logo" />
-		<div>
-			<img class="headerimg" src="../resources/img/manager.png"> <a>${sessionScope.nickname}</a>
-			<img class="headerimg" src="../resources/img/cancel.png"> <a
-				href="${path}/project/logout">注销</a>
+		<div id="header">
+		<div class="headlogo">
+			<img src="${path}/resources/img/logo.png"  alt="logo" />
+		</div>
+		<div class="headerinfo">
+			<c:if test="${sessionScope.nickname!=null}">
+				<img class="headerimg" src="../resources/img/manager.png">
+				<a>${sessionScope.nickname}</a>
+				<img class="headerimg" src="../resources/img/cancel.png">
+				<a href="${path}/project/logout">注销</a>
+			</c:if>
 		</div>
 	</div>
+	
+	
 	<input type="hidden" value="${loginUser.loginName}"
 		id="hidden-username" />
 	<input type="hidden" value="${loginUser.userType}" id="hidden-usertype" />

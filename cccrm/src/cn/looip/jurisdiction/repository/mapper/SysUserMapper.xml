@@ -16,6 +16,12 @@
 		Id, login_name, login_pwd
 	</sql>
 
+	<!-- 查询邮箱接口 -->
+	<select id="getUserEmail" parameterType="String" resultType="Integer">
+		select id from sys_user where user_email = #{0};
+	</select>
+	
+	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
 		select
