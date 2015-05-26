@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e8e8ea"
+    android:orientation="vertical"
+    tools:context="com.looip.crm.activity.LoginActivity" >
+
+    <include layout="@layout/title_bar" />
+
+    <com.looip.crm.refreshlistview.RefreshListView
+        android:id="@+id/lv_robot"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="5dp"
+        android:divider="#f2f2f5"
+        android:scrollbars="none" >
+    </com.looip.crm.refreshlistview.RefreshListView>
+
+</LinearLayout>
