@@ -28,12 +28,12 @@
 			var txt = "当日已申请过续约，请明天后再次申请吧！";
 			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
 		});
-		$("#btn2").click(function() {
-			var txt = "当日已申请过续约，请明天后再次申请吧！";
+		$(".btn2").click(function() {
+			var txt = "待审核中...请耐心等待！";
 			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
 		});
 		$(".btn3").click(function() {
-			var txt = "当日成功续约，请明天后再次续约！";
+			var txt = "管理员审核通过，已成功续约！";
 			window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
 		});
 		$("#btn4").click(function() {
@@ -184,12 +184,12 @@
 													<!-- 判断方式，当续约被管理员处理agree=1,提示已续约，当前时间>=客户续约的时间(是从0点算起)+24小时 （续约1天后） -->
 													<c:choose>
 														<c:when test="${pp.status==1}">
-															<a id="btn2">已申请</a>
+															<a class="btn2">待审核</a>
 														</c:when>
 														<c:when test="${pp.agree==1}">
 															<c:choose>
 																<c:when
-																	test="${date.getTime() >=pp.timeRecord.getTime()+(1000*60*60*18)}">
+																	test="${date.getTime()>=pp.timeRecord.getTime()+(1000*60*60*18)}">
 																	<a class="present" style="display: block;">已续约</a>
 																	<a class="presents" style="display: none;"
 																		data-toggle="modal" href="#signup-modal${index.count}">申请续约</a>

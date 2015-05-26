@@ -11,10 +11,17 @@ import java.util.Date;
 public class ProgrammerProject  implements Serializable{
 	private static final long serialVersionUID = -3905342877239644954L;
 	private int id;
-	private int programmer_id;
-	private int project_id;
+	private int programmer_id;//程序员ID
+	private String ProgrammerName;//程序员姓名
+	private short programmerLevel;//程序员等级
+	private String department_name;//程序员部门
+	private short pro_status;//项目状态
+	
+	private int project_id;//项目ID
 	private Date beginTime;//开始时间
 	private Date endTime;//结束时间
+	private int Day;//天数
+	private int TotalDays; 
 	private int status;//续约状态（是否有续约 0/1）
 	private int extension_time;//续约天数
 	private int agree;//续约是否同意
@@ -27,7 +34,6 @@ public class ProgrammerProject  implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 
 	public Date getBeginTime() {
@@ -94,8 +100,55 @@ public class ProgrammerProject  implements Serializable{
 		this.project_id = project_id;
 	}
 
+	public String getProgrammerName() {
+		return ProgrammerName;
+	}
+
+	public void setProgrammerName(String programmerName) {
+		ProgrammerName = programmerName;
+	}
+
+	public short getProgrammerLevel() {
+		return programmerLevel;
+	}
+
+	public void setProgrammerLevel(short programmerLevel) {
+		this.programmerLevel = programmerLevel;
+	}
+
+	public String getDepartment_name() {
+		return department_name;
+	}
+
+	public void setDepartment_name(String department_name) {
+		this.department_name = department_name;
+	}
+
+	public int getDay() {
+		return Day;
+	}
+
+	public void setDay(int day) {
+		Day = day;
+	}
+
+	public int getTotalDays() {
+		return TotalDays;
+	}
+
+	public void setTotalDays(int totalDays) {
+		TotalDays = totalDays;
+	}
+
+	public short getPro_status() {
+		return pro_status;
+	}
+
+	public void setPro_status(short pro_status) {
+		this.pro_status = pro_status;
+	}
 
 	
-	
+
 
 }
