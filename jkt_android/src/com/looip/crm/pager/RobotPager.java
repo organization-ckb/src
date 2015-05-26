@@ -28,8 +28,10 @@ import android.widget.Toast;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.HttpHandler;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.looip.crm.R;
 import com.looip.crm.activity.IndexActivity;
 import com.looip.crm.adapter.RobotAdapter;
@@ -271,6 +273,16 @@ public class RobotPager extends BasePager implements OnClickListener {
 					}
 				});
 
+	}
+
+	/**
+	 * 链接互联网
+	 */
+	@Override
+	public void loadData(HttpMethod method, String url, RequestParams params,
+			RequestCallBack<String> callBack) {
+		// TODO Auto-generated method stub
+		super.loadData(method, url, params, callBack);
 	}
 
 	/**
