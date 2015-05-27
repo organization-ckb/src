@@ -193,7 +193,7 @@ public class MyProjectPager extends BasePager implements OnClickListener {
 	 * @author lixingtao
 	 */
 	private void initProjectItemList() {
-		loadData(HttpMethod.GET, NetUtils.projectItemBean + "1", null,
+		loadData(HttpMethod.GET, NetUtils.PROJECTITEMBEAN + "1", null,
 				new RequestCallBack<String>() {
 
 					@Override
