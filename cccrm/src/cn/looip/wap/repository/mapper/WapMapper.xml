@@ -10,6 +10,21 @@
 <result column="pro_status"  property="status"/>
 </resultMap>
 
+<resultMap type="cn.looip.wap.repository.domain.ProgrammerProject" id="projetinfoMap">
+<result column="id"  property="id"/>
+<result column="programmer_id"  property="programmer_id"/>
+<result column="programmer_name"  property="ProgrammerName"/>
+<result column="programmer_level"  property="programmerLevel"/>
+<result column="department_name"  property="department_name"/>
+<result column="pro_status"  property="pro_status"/>
+<result column="status"  property="status"/>
+<result column="project_id"  property="project_id"/>
+<result column="begin_time"  property="beginTime"/>
+<result column="end_time"  property="endTime"/>
+<result column="day"  property="Day"/>
+
+</resultMap>
+
 <select id="getUserName" parameterType="String" resultType="Integer">
 select id from sys_user where login_name=#{0} 
 </select>
@@ -20,5 +35,11 @@ select id from sys_user where login_name=#{0} and login_pwd=#{1}
 
 <select id="getProjects" parameterType="int" resultMap="projectMap">
 select id,pro_name,pro_begin_time,pro_end_time,pro_status from project where customer_id=#{id}  ORDER by pro_begin_time DESC
+</select>
+
+<select id="getProjectInfo" parameterType="int" resultMap="projetinfoMap">
+select  pp.Id as Id,pp.begin_time as begin_time,pp.end_time as end_time,pp.status as status,pp.agree,pp.TimeRecord,pg.id as programmer_id,pg.programmer_name,pg.programmer_level,p.pro_status,p.id as project_id,p.pro_contract_pic,d.department_name
+		from programmer_project pp, programmer pg,project p,department d where pp.programmer_id=pg.id and pp.project_id=p.id and d.id=pg.department
+		and project_id=#{id}
 </select>
 </mapper>
