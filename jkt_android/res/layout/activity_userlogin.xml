@@ -76,6 +76,7 @@
                     android:cursorVisible="true"
                     android:gravity="center_vertical"
                     android:hint="用户名"
+                    android:singleLine="true"
                     android:textColor="#000000" />
             </LinearLayout>
 
@@ -106,6 +107,7 @@
                     android:cursorVisible="true"
                     android:gravity="center_vertical"
                     android:hint="密码"
+                    android:singleLine="true"
                     android:textColor="#000000" />
             </LinearLayout>
         </LinearLayout>
