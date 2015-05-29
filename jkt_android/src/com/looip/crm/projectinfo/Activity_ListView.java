@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -90,8 +91,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 
 		setContentView(R.layout.activity_listview);
 		lv_userinfo = (ListView) findViewById(R.id.lv_userinfo);
-		data = getData();
-		MyAdapter adapter = new MyAdapter(this);
+	//	data = getData();
 		myviewpager = View.inflate(Activity_ListView.this,
 				R.layout.activity_viewpager, null);
 		lv_userinfo.addHeaderView(myviewpager);
@@ -134,9 +134,13 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 	 */
 	private void loadProjectDate() {
 		// TODO Auto-generated method stub
+		//获得前一个页面的项目id
+		Intent intent=getIntent();
+		String ItemId=intent.getIntExtra("ItemId", 0)+"";
+		Toast.makeText(Activity_ListView.this, ItemId+"+++++", Toast.LENGTH_SHORT).show();
 		HttpUtils httpUtils = new HttpUtils();
 		httpUtils.send(HttpMethod.GET,
-				"http://crm.test.looip.com/wap/projectinfo?id=16",
+				"http://crm.test.looip.com/wap/projectinfo?id="+ItemId,
 				new RequestCallBack<String>() {
 
 			@Override
@@ -358,29 +362,29 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 
 		previousPosition = newPosition; // 把当前的点用前一个点的变量记录下来
 	}
-
-	/**
-	 * 设置item中的数据
-	 * 
-	 * @return
-	 */
-
-	private List<Map<String, Object>> getData() {
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map;
-		for (int i = 0; i < 10; i++) {
-			map = new HashMap<String, Object>();
-			map.put("img", R.drawable.userhead);
-			map.put("name", "唐歆聪");
-			map.put("level", "PHP高级工程师");
-			map.put("lastday", "剩余工作日：");
-			map.put("day", "3");
-			map.put("renewal", "续约");
-			list.add(map);
-		}
-		return list;
-
-	}
+//
+//	/**
+//	 * 设置item中的数据
+//	 * 
+//	 * @return
+//	 */
+//
+//	private List<Map<String, Object>> getData() {
+//		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+//		Map<String, Object> map;
+//		for (int i = 0; i < 10; i++) {
+//			map = new HashMap<String, Object>();
+//			map.put("img", R.drawable.userhead);
+//			map.put("name", "唐歆聪");
+//			map.put("level", "PHP高级工程师");
+//			map.put("lastday", "剩余工作日：");
+//			map.put("day", "3");
+//			map.put("renewal", "续约");
+//			list.add(map);
+//		}
+//		return list;
+//
+//	}
 
 	/**
 	 * ViewHolder静态类
@@ -391,81 +395,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 		tv_userinfo_lastday, tv_userinfo_day, tv_renewal;
 	}
 
-	/**
-	 * BaseAdapter适配器
-	 */
-	public class MyAdapter extends BaseAdapter {
-		private LayoutInflater mInflater = null;
 
-		private MyAdapter(Context context) {
-			this.mInflater = LayoutInflater.from(context);
-		}
-
-		public MyAdapter(Activity_ListView activity_ListView,
-				List<projetinfo> myList) {
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return data.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return position;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			ViewHolder holder = null;
-			// 如果缓存convertView为空，则需要创建View
-			if (convertView == null) {
-				holder = new ViewHolder();
-				// 根据自定义的item加载布局
-				convertView = mInflater.inflate(R.layout.userinfo_item, null);
-				holder.iv_userinfo_p = (ImageView) convertView
-						.findViewById(R.id.iv_userinfo_p);
-				holder.tv_userinfo_name = (TextView) convertView
-						.findViewById(R.id.tv_userinfo_name);
-				holder.tv_userinfo_level = (TextView) convertView
-						.findViewById(R.id.tv_userinfo_level);
-				holder.tv_userinfo_lastday = (TextView) convertView
-						.findViewById(R.id.tv_userinfo_lastday);
-				holder.tv_userinfo_day = (TextView) convertView
-						.findViewById(R.id.tv_userinfo_day);
-				holder.tv_renewal = (TextView) convertView
-						.findViewById(R.id.tv_renewal);
-				// 将设置好的布局保存到缓存中，并将其设置在tag里
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			holder.iv_userinfo_p.setBackgroundResource((Integer) data.get(
-					position).get("img"));
-			holder.tv_userinfo_name.setText((String) data.get(position).get(
-					"name"));
-			holder.tv_userinfo_level.setText((String) data.get(position).get(
-					"level"));
-			holder.tv_userinfo_lastday.setText((String) data.get(position).get(
-					"lastday"));
-			holder.tv_userinfo_day.setText((String) data.get(position).get(
-					"day"));
-			holder.tv_renewal.setText((String) data.get(position)
-					.get("renewal"));
-			return convertView;
-		}
-
-	}
 
 	/**
 	 * BaseAdapter适配器.
@@ -534,7 +464,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 					.findViewById(R.id.tv_renewal);
 			
 
-			iv_userinfo_p.setBackgroundResource((Integer) data.get(position).get("img"));
+			//iv_userinfo_p.setBackgroundResource((Integer) data.get(position).get("img"));
 			
 			//设置程序员姓名
 			tv_userinfo_name.setText(myList.get(position).programmerName);

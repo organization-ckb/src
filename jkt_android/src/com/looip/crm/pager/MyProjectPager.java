@@ -102,6 +102,7 @@ public class MyProjectPager extends BasePager implements OnClickListener {
 					 * @author lixingtao
 					 */
 					int ItemId = projectItemList.get(position - 1).id;
+					//获取项目ID传给后一个页面
 					Toast.makeText(ct, ItemId + "ItemID", 0).show();
 					Intent intent = new Intent(ct, Activity_ListView.class);
 					intent.putExtra("ItemId", ItemId);
@@ -128,63 +129,63 @@ public class MyProjectPager extends BasePager implements OnClickListener {
 		 * 设置下拉刷新
 		 */
 		mListView
-				.setOnRefreshListener(new com.looip.crm.refreshlistview.OnRefreshListener() {
+		.setOnRefreshListener(new com.looip.crm.refreshlistview.OnRefreshListener() {
 
+			@Override
+			public void onPullDownRefresh() {
+
+				// 刷新数据.
+				new AsyncTask<Void, Void, Void>() {
+					/**
+					 * 在onPreExecute执行完之后, 执行, 运行在子线程中.
+					 */
 					@Override
-					public void onPullDownRefresh() {
-
-						// 刷新数据.
-						new AsyncTask<Void, Void, Void>() {
-							/**
-							 * 在onPreExecute执行完之后, 执行, 运行在子线程中.
-							 */
-							@Override
-							protected Void doInBackground(Void... params) {
-								SystemClock.sleep(3000);
-								// projectItemList.add(new
-								// projects("231331","laomi","123131231",1));
-								return null;
-							}
-
-							/**
-							 * 在doInBackground方法执行之后, 调用. 运行在主线程中
-							 */
-							@Override
-							protected void onPostExecute(Void result) {
-
-								// 调用REfreshListView中的方法, 隐藏头布局
-								mListView.hideHeaderView();
-								adapter.notifyDataSetChanged();
-							}
-						}.execute(new Void[] {}); // 调用onPreExecute
+					protected Void doInBackground(Void... params) {
+						SystemClock.sleep(3000);
+						// projectItemList.add(new
+						// projects("231331","laomi","123131231",1));
+						return null;
 					}
 
 					/**
-					 * 加载更多
-					 * 
-					 * @author lixingtao
+					 * 在doInBackground方法执行之后, 调用. 运行在主线程中
 					 */
 					@Override
-					public void onLoadingMore() {
-						// new AsyncTask<Void, Void, Void>() {
-						//
-						// @Override
-						// protected Void doInBackground(Void... params) {
-						// SystemClock.sleep(5000);
-						// return null;
-						// }
-						//
-						// @Override
-						// protected void onPostExecute(Void result) {
-						// adapter.notifyDataSetChanged();
-						//
-						// 脚布局隐藏
-						mListView.hideFooterView();
-						// }
-						//
-						// }.execute(new Void[] {});
+					protected void onPostExecute(Void result) {
+
+						// 调用REfreshListView中的方法, 隐藏头布局
+						mListView.hideHeaderView();
+						adapter.notifyDataSetChanged();
 					}
-				});
+				}.execute(new Void[] {}); // 调用onPreExecute
+			}
+
+			/**
+			 * 加载更多
+			 * 
+			 * @author lixingtao
+			 */
+			@Override
+			public void onLoadingMore() {
+				// new AsyncTask<Void, Void, Void>() {
+				//
+				// @Override
+				// protected Void doInBackground(Void... params) {
+				// SystemClock.sleep(5000);
+				// return null;
+				// }
+				//
+				// @Override
+				// protected void onPostExecute(Void result) {
+				// adapter.notifyDataSetChanged();
+				//
+				// 脚布局隐藏
+				mListView.hideFooterView();
+				// }
+				//
+				// }.execute(new Void[] {});
+			}
+		});
 	}
 
 	/**
@@ -196,29 +197,29 @@ public class MyProjectPager extends BasePager implements OnClickListener {
 		loadData(HttpMethod.GET, NetUtils.PROJECTITEMBEAN + "1", null,
 				new RequestCallBack<String>() {
 
-					@Override
-					public void onFailure(HttpException arg0, String arg1) {
-						// TODO Auto-generated method stub
-						// 获取数据失败提示
-						Toast.makeText(ct, "网络连接异常！", 0).show();
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				// TODO Auto-generated method stub
+				// 获取数据失败提示
+				Toast.makeText(ct, "网络连接异常！", 0).show();
 
-					}
+			}
 
-					@Override
-					public void onSuccess(ResponseInfo<String> arg0) {
-						// TODO Auto-generated method stub
-						/**
-						 * 成功后缓存 & 解析
-						 */
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				// TODO Auto-generated method stub
+				/**
+				 * 成功后缓存 & 解析
+				 */
 
-						LogUtils.d("responseInfo---->" + arg0.result);
+				LogUtils.d("responseInfo---->" + arg0.result);
 
-						SharedPreferencesUtils.saveString(ct,
-								"projectItemBeanJson", arg0.result);
-						processData(arg0.result);
+				SharedPreferencesUtils.saveString(ct,
+						"projectItemBeanJson", arg0.result);
+				processData(arg0.result);
 
-					}
-				});
+			}
+		});
 	}
 
 	/**
