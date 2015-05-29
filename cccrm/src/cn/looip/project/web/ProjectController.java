@@ -49,6 +49,24 @@ public class ProjectController {
 				new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 
+	/**
+	 *  初始化：1、修改已结束的项目状态。
+	 *  2、查询已结束的程序员ID，
+	 *  查出最后一次项目都已经结束了的ID，修改程序员状态
+	 */
+	public void Init(){
+		proservice.updateStatus();//项目结束时间到期，自动修改状态，如需要手动修改状态则删除
+		List<ProgrammerProject> Pgprojecr = proservice.endTimeprogrammer();
+		if (Pgprojecr != null) {
+			for (int i = 0; i < Pgprojecr.size(); i++) {
+				int id = Pgprojecr.get(i).getProgrammer().getId();
+				Integer ids = proservice.getProgrammerID(id);
+				if (ids != null) {
+					proservice.updatePprogrammerState(ids);
+				}
+			}
+		}
+	}
 	@RequestMapping(value = "/addPro", method = RequestMethod.GET)
 	public String addProject(Model model, HttpSession session, String massage,
 			String massages) throws UnsupportedEncodingException {
@@ -419,5 +437,6 @@ public class ProjectController {
 			}
 		}
 	}
+
 
 }
