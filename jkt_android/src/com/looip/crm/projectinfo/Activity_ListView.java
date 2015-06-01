@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +25,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -43,6 +45,8 @@ import com.looip.crm.bean.ProjectItemDetails;
 import com.looip.crm.bean.ProjectItemDetails.projetinfo;
 
 public class Activity_ListView extends Activity implements OnPageChangeListener {
+	SharedPreferences shrPreferences;
+	SharedPreferences preferences;
 	private static final int DIALOG_TEXT_ENTRY = 1;
 	View myview;
 	View myviewpager;
@@ -76,13 +80,6 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		/**
-		 * 获取 项目编号
-		 * @author 李兴涛
-		 */
-		Intent intent = getIntent();
-		int ItemId = intent.getIntExtra("ItemId", 0);
-		System.out.println(ItemId+"11111111111111111111111111111111111111111111111111111");
 
 		/**
 		 * 去除标题
@@ -91,7 +88,10 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 
 		setContentView(R.layout.activity_listview);
 		lv_userinfo = (ListView) findViewById(R.id.lv_userinfo);
-	//	data = getData();
+		//	data = getData();
+		shrPreferences=getSharedPreferences("dialoginfo",MODE_WORLD_READABLE);
+		preferences=getSharedPreferences("dialoginfo", MODE_WORLD_READABLE);
+		
 		myviewpager = View.inflate(Activity_ListView.this,
 				R.layout.activity_viewpager, null);
 		lv_userinfo.addHeaderView(myviewpager);
@@ -101,7 +101,11 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				showDialog(DIALOG_TEXT_ENTRY);
+
+				/**
+				 * 显示续约提示框
+				 */
+				//showDialog(DIALOG_TEXT_ENTRY);
 			}
 		});
 		loadProjectDate();
@@ -123,7 +127,6 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 		});
 		thread.start();
 
-		// lv_userinfo.setAdapter(adapter);
 		lv_userinfo.setAdapter(new MyAdapter1(this, myList));
 	}
 
@@ -137,7 +140,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 		//获得前一个页面的项目id
 		Intent intent=getIntent();
 		String ItemId=intent.getIntExtra("ItemId", 0)+"";
-		Toast.makeText(Activity_ListView.this, ItemId+"+++++", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(Activity_ListView.this, ItemId+"+++++", Toast.LENGTH_SHORT).show();
 		HttpUtils httpUtils = new HttpUtils();
 		httpUtils.send(HttpMethod.GET,
 				"http://crm.test.looip.com/wap/projectinfo?id="+ItemId,
@@ -154,7 +157,11 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			public void onSuccess(ResponseInfo<String> arg0) {
 				// TODO Auto-generated method stub
 				String result = arg0.result;
+				SharedPreferences sharedPreferences=getSharedPreferences("projectinfo",MODE_WORLD_READABLE);
+				SharedPreferences.Editor editor=sharedPreferences.edit();
+				editor.putString("projectinfo", result);
 				System.out.println("1111111111111111111" + result);
+				//解析数据
 				processDate(result);
 			}
 		});
@@ -197,12 +204,31 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 					.findViewById(R.id.tv_renewal_sure);
 			TextView tv_renewal_cancel = (TextView) textEntryView
 					.findViewById(R.id.tv_renewal_cancel);
+			TextView tv_dialog_name=(TextView) textEntryView.findViewById(R.id.tv_dialog_name);
+
+			TextView tv_dialog_level=(TextView) textEntryView.findViewById(R.id.tv_dialog_level);
+
+			TextView tv_dialog_lastday=(TextView) textEntryView.findViewById(R.id.tv_dialog_lastday);
+
+			EditText et_dialog_lastday=(EditText) textEntryView.findViewById(R.id.et_dialog_lastday);
+			
+			String programmerName=preferences.getString("dialogName", null);
+			String programmerLevel=preferences.getString("dialogLevel", null);
+			String ProgrammerDay=preferences.getString("dialogLastday", null);
+			tv_dialog_name.setText(programmerName);
+			tv_dialog_level.setText(programmerLevel);
+			tv_dialog_lastday.setText(ProgrammerDay);
+			String programmerId=preferences.getString("dialogId", null);
+			
+			System.out.println(programmerId+"|"+programmerName+"|"+programmerLevel+"|"+ProgrammerDay);
+
 			tv_renewal_cancel.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					ad.dismiss();
+					removeDialog(DIALOG_TEXT_ENTRY);
 				}
 			});
 			tv_renewal_sure.setOnClickListener(new View.OnClickListener() {
@@ -362,45 +388,11 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 
 		previousPosition = newPosition; // 把当前的点用前一个点的变量记录下来
 	}
-//
-//	/**
-//	 * 设置item中的数据
-//	 * 
-//	 * @return
-//	 */
-//
-//	private List<Map<String, Object>> getData() {
-//		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-//		Map<String, Object> map;
-//		for (int i = 0; i < 10; i++) {
-//			map = new HashMap<String, Object>();
-//			map.put("img", R.drawable.userhead);
-//			map.put("name", "唐歆聪");
-//			map.put("level", "PHP高级工程师");
-//			map.put("lastday", "剩余工作日：");
-//			map.put("day", "3");
-//			map.put("renewal", "续约");
-//			list.add(map);
-//		}
-//		return list;
-//
-//	}
-
-	/**
-	 * ViewHolder静态类
-	 */
-	static class ViewHolder {
-		public ImageView iv_userinfo_p;
-		public TextView tv_userinfo_name, tv_userinfo_level,
-		tv_userinfo_lastday, tv_userinfo_day, tv_renewal;
-	}
-
 
 
 	/**
 	 * BaseAdapter适配器.
 	 * 
-	 * @author 李兴涛
 	 */
 	public class MyAdapter1 extends BaseAdapter {
 		private LayoutInflater mInflater = null;
@@ -435,7 +427,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			// 如果缓存convertView为空，则需要创建View
 			if (convertView == null) {
@@ -462,10 +454,10 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			//续约
 			TextView tv_renewal = (TextView) convertView
 					.findViewById(R.id.tv_renewal);
-			
+
 
 			//iv_userinfo_p.setBackgroundResource((Integer) data.get(position).get("img"));
-			
+
 			//设置程序员姓名
 			tv_userinfo_name.setText(myList.get(position).programmerName);
 			String level=myList.get(position).programmerLevel;
@@ -494,7 +486,41 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 				tv_renewal.setText("项目已完成");
 				tv_renewal.setEnabled(false);
 			}
-			
+			tv_renewal.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					//Toast.makeText(Activity_ListView.this,"success", Toast.LENGTH_SHORT).show();
+					
+					String dialogName=myList.get(position).programmerName;
+					String dialogId=myList.get(position).programmer_id;
+					String level=myList.get(position).programmerLevel;
+					if(level.equals("0")){
+						level="初级工程师";
+					}else if(level.equals("1")){
+						level="中级工程师";
+					}else if(level.equals("2")){
+						level="高级工程师";
+					}else if(level.equals("3")){
+						level="资深工程师";
+					}
+
+					//缓存点选的程序员信息
+					String dialogLevel=myList.get(position).department_name+level;
+					String dialogLastday=myList.get(position).day;
+					Editor editor=shrPreferences.edit();
+					editor.putString("dialogName", dialogName);
+					editor.putString("dialogId", dialogId);
+					editor.putString("dialogLevel", dialogLevel);
+					editor.putString("dialogLastday", dialogLastday);
+					editor.commit();
+					System.out.println(dialogName+"   "+dialogId+"   "+dialogLevel+"   "+dialogLastday);
+					showDialog(DIALOG_TEXT_ENTRY);
+
+				}
+			});
+
 			return convertView;
 		}
 

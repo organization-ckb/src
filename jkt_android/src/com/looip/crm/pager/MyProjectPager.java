@@ -103,7 +103,7 @@ public class MyProjectPager extends BasePager implements OnClickListener {
 					 */
 					int ItemId = projectItemList.get(position - 1).id;
 					//获取项目ID传给后一个页面
-					Toast.makeText(ct, ItemId + "ItemID", 0).show();
+					//Toast.makeText(ct, ItemId + "ItemID", 0).show();
 					Intent intent = new Intent(ct, Activity_ListView.class);
 					intent.putExtra("ItemId", ItemId);
 					ct.startActivity(intent);
@@ -117,7 +117,7 @@ public class MyProjectPager extends BasePager implements OnClickListener {
 					 * @author lixingtao
 					 */
 					int ItemID = projectItemList.get(position - 1).id;
-					Toast.makeText(ct, ItemID + "haha", 0).show();
+					//Toast.makeText(ct, ItemID + "haha", 0).show();
 					Intent intent = new Intent(ct, Activity_ListView.class);
 					intent.putExtra("ItemID", ItemID);
 					ct.startActivity(intent);

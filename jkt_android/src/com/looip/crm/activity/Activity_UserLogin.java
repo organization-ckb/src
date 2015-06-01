@@ -44,10 +44,12 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.looip.crm.R;
+import com.looip.crm.bean.EmailCheckBean;
 import com.looip.crm.bean.LoginResult;
 import com.looip.crm.utils.SharedPreferencesUtils;
 
 public class Activity_UserLogin extends Activity {
+	private boolean isLoged;
 	private static final int DIALOG_TEXT_ENTRY = 1;
 
 	private static final int MAX_PROGRESS = 100;
@@ -56,10 +58,10 @@ public class Activity_UserLogin extends Activity {
 	private int mProgress;
 	private Handler mProgressHandler;
 	View mView;
-	
+
 	SharedPreferences preferences;
 	SharedPreferences.Editor editor;
-	
+
 	@ViewInject(R.id.et_userlogin_name)
 	private EditText et_userlogin_name;
 
@@ -71,6 +73,9 @@ public class Activity_UserLogin extends Activity {
 
 	@ViewInject(R.id.tv_userlogin_forgetpassword)
 	private TextView tv_userlogin_forgetpassword;
+
+	@ViewInject(R.id.et_email)
+	private EditText et_email;
 
 	@SuppressLint("InflateParams")
 	@Override
@@ -89,6 +94,7 @@ public class Activity_UserLogin extends Activity {
 					.findViewById(R.id.tv_login_sure);
 			TextView tv_login_cancel = (TextView) textEntryView
 					.findViewById(R.id.tv_login_cancel);
+			et_email=(EditText) textEntryView.findViewById(R.id.et_email);
 			/**
 			 * 自定义dialog取消按钮事件
 			 */
@@ -109,7 +115,56 @@ public class Activity_UserLogin extends Activity {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 
+					/**
+					 * 验证邮箱 
+					 */
+					final String userEmail=et_email.getText().toString();
+					HttpUtils httpUtils=new HttpUtils();
+					RequestParams params=new RequestParams("utf8");
+					httpUtils.configCurrentHttpCacheExpiry(1000 * 10);  
+
+					params.addBodyParameter("userEmail", userEmail);
+
+					httpUtils.send(HttpRequest.HttpMethod.GET,"http://172.16.10.144:8080/cccrm/wap/checkEmail?userEmail="+userEmail,new RequestCallBack<String>(){
+
+						@Override
+						public void onFailure(HttpException arg0, String arg1) {
+							// TODO Auto-generated method stub
+							Toast.makeText(textEntryView.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();	
+						}
+
+						@Override
+						public void onSuccess(ResponseInfo<String> arg0) {
+							// TODO Auto-generated method stub
+							String res=arg0.result;
+							System.out.println(res+"+++++++++++++++++");
+							Gson gson = new Gson();// gson 对象
+							EmailCheckBean json = gson.fromJson(res, EmailCheckBean.class);
+
+							if (json.resultcode==200) {
+								if(json.results.equals("1")){					
+									Toast.makeText(textEntryView.getContext(), "新密码已发送至您邮箱，请使用新密码重新登陆", Toast.LENGTH_SHORT).show();
+									//清楚账号密码信息
+									editor.putString("loginPwd", "");
+									editor.commit();
+									isLoged=SharedPreferencesUtils.getBoolean(Activity_UserLogin.this, "isLoged", false);
+									isLoged=false;
+									SharedPreferencesUtils.saveBoolean(Activity_UserLogin.this,"isLoged",false);
+									ad.dismiss();
+									et_userlogin_password.setText("");									
+
+								}else {
+									Toast.makeText(textEntryView.getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+
+								}
+
+							}
+
+						}
+
+					}); 
 				}
+
 			});
 			return ad;
 		}
@@ -186,6 +241,8 @@ public class Activity_UserLogin extends Activity {
 		LoginSuccess();
 	}
 
+
+
 	/**
 	 * 发送网络请求验证登陆
 	 */
@@ -195,6 +252,8 @@ public class Activity_UserLogin extends Activity {
 		 */
 		final String loginName = et_userlogin_name.getText().toString().trim();
 		final String loginPwd = et_userlogin_password.getText().toString().trim();
+		editor.putString("loginName", loginName);
+		editor.putString("loginPwd", loginPwd);
 		HttpUtils httpUtils=new HttpUtils();
 		RequestParams params=new RequestParams("utf8");
 		httpUtils.configCurrentHttpCacheExpiry(1000 * 10);  
@@ -220,20 +279,27 @@ public class Activity_UserLogin extends Activity {
 
 				if (json.resultcode==200) {
 					if(json.results.equals("1")){
-						/**
-						 * 如果选中记住密码，则将密码保存
-						 */
+		
+						
 
-						editor.putString("loginName", loginName);
-						editor.putString("loginPwd", loginPwd);
 						editor.putInt("id", json.id);
 						editor.commit();
 						Intent intent=new Intent();
 						intent.setClass(Activity_UserLogin.this, IndexActivity.class);
 						startActivity(intent);
 						Activity_UserLogin.this.finish();
+						isLoged=SharedPreferencesUtils.getBoolean(Activity_UserLogin.this, "isLoged", false);
+						isLoged=true;
+						SharedPreferencesUtils.saveBoolean(Activity_UserLogin.this,"isLoged",true);
+						
 					}else {
-						Toast.makeText(Activity_UserLogin.this, "登陆失败", Toast.LENGTH_SHORT).show();
+						Toast.makeText(Activity_UserLogin.this, "登陆失败,请输入正确的用户名和密码", Toast.LENGTH_SHORT).show();
+						et_userlogin_password.setText("");
+						isLoged=SharedPreferencesUtils.getBoolean(Activity_UserLogin.this, "isLoged", false);
+						isLoged=false;
+						SharedPreferencesUtils.saveBoolean(Activity_UserLogin.this,"isLoged",false);
+						editor.putString("loginPwd", "");
+						editor.commit();
 					}
 
 				}
