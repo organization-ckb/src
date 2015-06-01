@@ -1,7 +1,6 @@
 package cn.looip.jurisdiction.web;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -17,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
+
 import cn.looip.core.utils.Utils;
 import cn.looip.jurisdiction.repository.domain.SysUser;
 import cn.looip.jurisdiction.service.interfaces.JurisdictionService;
-import cn.looip.project.repository.domain.ProgrammerProject;
 import cn.looip.project.service.interfaces.ProjectService;
+import cn.looip.project.web.ProjectController;
 
 @Controller
 @RequestMapping("/user")
@@ -100,18 +101,7 @@ public class UserController
 			 * 登录成功：修改已结束的项目状态，查询已结束的程序员ID，
 			 * 查出最后一次项目都已经结束了的ID，修改程序员状态;
 			 */
-			proservice.updateStatus();
-			List<ProgrammerProject> Pgprojecr = proservice.endTimeprogrammer();
-			if (Pgprojecr != null) {
-				for (int i = 0; i < Pgprojecr.size(); i++) {
-					int id = Pgprojecr.get(i).getProgrammer().getId();
-					Integer ids = proservice.getProgrammerID(id);
-					if (ids != null) {
-						proservice.updatePprogrammerState(ids);
-					}
-				}
-			}
-			
+			new ProjectController().Init();
 			return new ModelAndView("redirect:../project/projectManage");
 		}
 		else

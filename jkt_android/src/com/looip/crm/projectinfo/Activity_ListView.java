@@ -82,7 +82,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 		Intent intent = getIntent();
 		int ItemId = intent.getIntExtra("ItemId", 0);
 		System.out.println(ItemId+"11111111111111111111111111111111111111111111111111111");
-		
+
 		/**
 		 * 去除标题
 		 */
@@ -139,21 +139,21 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 				"http://crm.test.looip.com/wap/projectinfo?id=16",
 				new RequestCallBack<String>() {
 
-					@Override
-					public void onFailure(HttpException arg0, String arg1) {
-						// TODO Auto-generated method stub
-						Toast.makeText(Activity_ListView.this, "网络数据异常", 0)
-								.show();
-					}
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Activity_ListView.this, "网络数据异常", 0)
+				.show();
+			}
 
-					@Override
-					public void onSuccess(ResponseInfo<String> arg0) {
-						// TODO Auto-generated method stub
-						String result = arg0.result;
-						System.out.println("1111111111111111111" + result);
-						processDate(result);
-					}
-				});
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				// TODO Auto-generated method stub
+				String result = arg0.result;
+				System.out.println("1111111111111111111" + result);
+				processDate(result);
+			}
+		});
 	}
 
 	/**
@@ -232,7 +232,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			// 创建一个ImageView, 并且添加到集合中
 			iv = new ImageView(myviewpager.getContext());
 			iv.setBackgroundResource(imageResIDs[i]); // 将图片 id 数组中对应的图片作为 iv
-														// 的背景资源
+			// 的背景资源
 			imageViews.add(iv); // 将 iv 添加到 imageViews 集合中
 
 			// 把对应的圆点 ， 添加到线性布局中
@@ -242,11 +242,11 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			lp.leftMargin = 5; // 设置 “圆点相隔的间距” 为 5dip
 			lp.rightMargin = 5;
 			myviewpager.setLayoutParams(lp); // 将 view 对象的宽高都设置为 10 ，这样圆角半径为 5
-												// 的四个角拼起来正好是一个圆
+			// 的四个角拼起来正好是一个圆
 
 			myviewpager.setBackgroundResource(R.drawable.point_background); // 设置圆点
-																			// view
-																			// 的背景布局
+			// view
+			// 的背景布局
 
 			myviewpager.setEnabled(false); // 将 view 设置为 false 普通圆点 ，“灰暗”
 			vPoints.addView(myviewpager);
@@ -388,7 +388,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 	static class ViewHolder {
 		public ImageView iv_userinfo_p;
 		public TextView tv_userinfo_name, tv_userinfo_level,
-				tv_userinfo_lastday, tv_userinfo_day, tv_renewal;
+		tv_userinfo_lastday, tv_userinfo_day, tv_renewal;
 	}
 
 	/**
@@ -514,26 +514,57 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 						R.layout.userinfo_item, null);
 
 			}
+			//头像
 			ImageView iv_userinfo_p = (ImageView) convertView
 					.findViewById(R.id.iv_userinfo_p);
+			//用户名
 			TextView tv_userinfo_name = (TextView) convertView
 					.findViewById(R.id.tv_userinfo_name);
+			//等级
 			TextView tv_userinfo_level = (TextView) convertView
 					.findViewById(R.id.tv_userinfo_level);
+			//剩余
 			TextView tv_userinfo_lastday = (TextView) convertView
 					.findViewById(R.id.tv_userinfo_lastday);
+			//剩余天数
 			TextView tv_userinfo_day = (TextView) convertView
 					.findViewById(R.id.tv_userinfo_day);
+			//续约
 			TextView tv_renewal = (TextView) convertView
 					.findViewById(R.id.tv_renewal);
+			
 
-			iv_userinfo_p.setBackgroundResource((Integer) data.get(position)
-					.get("img"));
+			iv_userinfo_p.setBackgroundResource((Integer) data.get(position).get("img"));
+			
+			//设置程序员姓名
 			tv_userinfo_name.setText(myList.get(position).programmerName);
-			tv_userinfo_level.setText(myList.get(position).programmerLevel);
-			tv_userinfo_lastday.setText(myList.get(position).timeRecord);
-			tv_userinfo_day.setText(myList.get(position).totalDays);
-			tv_renewal.setText(myList.get(position).agree);
+			String level=myList.get(position).programmerLevel;
+			if(level.equals("0")){
+				level="初级工程师";
+			}else if(level.equals("1")){
+				level="中级工程师";
+			}else if(level.equals("2")){
+				level="高级工程师";
+			}else if(level.equals("3")){
+				level="资深工程师";
+			}
+			String department=myList.get(position).department_name;
+			//设置程序员等级
+			tv_userinfo_level.setText(department+level);
+			//设置剩余工作日
+			String finish=myList.get(position).status;
+			if(finish.equals("0")){
+				tv_userinfo_lastday.setText("剩余工作日:");
+				tv_userinfo_day.setText(myList.get(position).day);
+				tv_renewal.setText("续约");
+				tv_renewal.setEnabled(true);
+			}else {
+				tv_userinfo_lastday.setText("总工作日:");
+				tv_userinfo_day.setText(myList.get(position).totalDays);
+				tv_renewal.setText("项目已完成");
+				tv_renewal.setEnabled(false);
+			}
+			
 			return convertView;
 		}
 
