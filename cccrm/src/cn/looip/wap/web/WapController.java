@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.looip.project.service.interfaces.ProjectService;
+import cn.looip.project.web.ProjectController;
 import cn.looip.wap.repository.domain.ProgrammerProject;
 import cn.looip.wap.repository.domain.Project;
 import cn.looip.wap.repository.domain.SysUser;
@@ -20,7 +22,9 @@ public class WapController {
 
 	@Autowired
 	private WapService wapservice;
-
+	@Autowired
+	private ProjectService proservice;
+	
 	@RequestMapping("/login")
 	@ResponseBody
 	public Map<String, String> getlogin(SysUser user) {
@@ -48,6 +52,7 @@ public class WapController {
 	public Map<String, Object> getProjects(int id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			new ProjectController().Init();
 			List<Project> Projects = wapservice.getProjects(id);
 			map.put("projects", Projects);
 			map.put("resultcode", "200");

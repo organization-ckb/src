@@ -238,9 +238,15 @@ public class MyProjectPager extends BasePager implements OnClickListener {
 		// 如果集合不为空&&返回码为200 继续下步操作
 		if (projects.size() > 0 && json.resultcode == 200) {
 			projectItemList.clear();
-			for (projects project : projects) {
-				projectItemList.add(project);
-				System.out.println(project.toString());
+			projectItemList.addAll(projects);
+			/*
+			 * 设置adapter的更新（MyProjectAdapter&mListView）
+			 */
+			if (adapter == null) {
+				adapter = new MyProjectAdapter(ct, projectItemList);
+				mListView.setAdapter(adapter);
+			} else {
+				adapter.notifyDataSetChanged();
 			}
 		} else {
 			Toast.makeText(ct, "获取网络数据异常", 0).show();
