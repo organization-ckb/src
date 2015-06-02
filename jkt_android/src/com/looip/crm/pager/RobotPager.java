@@ -48,18 +48,26 @@ import com.looip.crm.utils.PromptManager;
  * 
  */
 public class RobotPager extends BasePager implements OnClickListener {
+	//机器人列表集合
 	private List<RobotInfoBean> robotList = new ArrayList<RobotInfoBean>();
+	//可刷新的listview
 	private RefreshListView mListView;
+	//机器人列表适配器
 	private RobotAdapter robotAdapter;
+	//包管理器
 	private PackageManager packageManager;
+	//派宝机器人 包名
+	private String padbotPackageName="cn.inbot.padbotpad";
+	//是否已安装派宝机器人
 	private boolean installed;
+	//机器人apk 路径
 	private String apkFile = Environment.getExternalStorageDirectory()
 			.getAbsolutePath().toString()
 			+ "/padbot.apk";
 
-	// private File file = new File(ct.getFilesDir(), "padbot.apk");
-	public File file = new File(Environment.getExternalStorageDirectory()
-			.getAbsolutePath().toString(), "padbot.apk");
+	//机器人文件
+	private File file = new File(apkFile, "padbot.apk");
+	//下载进度条
 	private ProgressDialog progressDialog;
 
 	public RobotPager(Context context) {
@@ -69,7 +77,6 @@ public class RobotPager extends BasePager implements OnClickListener {
 
 	@Override
 	public View initView() {
-
 		progressDialog = new ProgressDialog(ct);
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		View view = View.inflate(ct, R.layout.activity_robot, null);
@@ -79,15 +86,10 @@ public class RobotPager extends BasePager implements OnClickListener {
 		txt_title.setText("机器人");
 		tv_left.setText("首页");
 		imgleft.setOnClickListener(this);
-		installed = isInstalled("com.inbot.module.padbot", "派宝");
-
+		installed = isInstalled(padbotPackageName, "派宝");
 		return view;
 	}
 
-	/**
-	 * 判断是否下载完成
-	 * 
-	 */
 	/**
 	 * 获取程序列表
 	 * 
@@ -109,13 +111,11 @@ public class RobotPager extends BasePager implements OnClickListener {
 			packname = info.packageName;
 			appInfo = info.applicationInfo;
 			appName = appInfo.loadLabel(packageManager).toString();
-			// //判断是否安装了某应用
+			//判断是否安装了某应用
 			if (packname.equals(packageName) && appName.equals(appSoftName)) {
 				return true;
 			}
-
 		}
-
 		return false;
 	}
 
@@ -152,10 +152,7 @@ public class RobotPager extends BasePager implements OnClickListener {
 		 */
 		Intent intent = new Intent();
 		intent.setAction("android.intent.action.VIEW");
-		// 文件 /sdcard
-		// File file = new File("file:///android_assets/padbot.apk");
-		// File file = new File(Environment.getExternalStorageDirectory(),
-		// "padbot.apk");
+		
 		Uri data = Uri.fromFile(file);
 		// 如果一个activity中有scheme和mimtype使用setDateAndType
 		intent.setDataAndType(data, "application/vnd.android.package-archive");
@@ -176,14 +173,14 @@ public class RobotPager extends BasePager implements OnClickListener {
 				if (mListView.getChildCount() > 0) {
 					Toast.makeText(ct, "" + (position - 1), 0).show();
 					if (installed) {
-						startApp("com.inbot.module.padbot");
+						startApp(padbotPackageName);
 					} else {
 						/**
 						 * 获取网络状态
 						 */
 						if (PromptManager.isConn(ct)) {
 							showDownDialog();
-							installed = isInstalled("com.inbot.module.padbot",
+							installed = isInstalled(padbotPackageName,
 									"派宝");
 						} else {
 							PromptManager.setNetworkMethod(ct);
@@ -194,14 +191,14 @@ public class RobotPager extends BasePager implements OnClickListener {
 				} else {
 					Toast.makeText(ct, "" + position, 0).show();
 					if (installed) {
-						startApp("com.inbot.module.padbot");
+						startApp(padbotPackageName);
 					} else {
 						/**
 						 * 获取网络状态
 						 */
 						if (PromptManager.isConn(ct)) {
 							showDownDialog();
-							installed = isInstalled("com.inbot.module.padbot",
+							installed = isInstalled(padbotPackageName,
 									"派宝");
 						} else {
 							PromptManager.setNetworkMethod(ct);
