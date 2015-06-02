@@ -8,6 +8,8 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -18,6 +20,7 @@ import android.os.SystemClock;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +94,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 		//	data = getData();
 		shrPreferences=getSharedPreferences("dialoginfo",MODE_WORLD_READABLE);
 		preferences=getSharedPreferences("dialoginfo", MODE_WORLD_READABLE);
-		
+
 		myviewpager = View.inflate(Activity_ListView.this,
 				R.layout.activity_viewpager, null);
 		lv_userinfo.addHeaderView(myviewpager);
@@ -211,7 +214,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			TextView tv_dialog_lastday=(TextView) textEntryView.findViewById(R.id.tv_dialog_lastday);
 
 			EditText et_dialog_lastday=(EditText) textEntryView.findViewById(R.id.et_dialog_lastday);
-			
+
 			String programmerName=preferences.getString("dialogName", null);
 			String programmerLevel=preferences.getString("dialogLevel", null);
 			String ProgrammerDay=preferences.getString("dialogLastday", null);
@@ -219,7 +222,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			tv_dialog_level.setText(programmerLevel);
 			tv_dialog_lastday.setText(ProgrammerDay);
 			String programmerId=preferences.getString("dialogId", null);
-			
+
 			System.out.println(programmerId+"|"+programmerName+"|"+programmerLevel+"|"+ProgrammerDay);
 
 			tv_renewal_cancel.setOnClickListener(new View.OnClickListener() {
@@ -236,6 +239,16 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+
+				}
+			});
+			ad.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					// TODO Auto-generated method stub
+					ad.dismiss();
+					removeDialog(DIALOG_TEXT_ENTRY);
 
 				}
 			});
@@ -492,7 +505,7 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					//Toast.makeText(Activity_ListView.this,"success", Toast.LENGTH_SHORT).show();
-					
+
 					String dialogName=myList.get(position).programmerName;
 					String dialogId=myList.get(position).programmer_id;
 					String level=myList.get(position).programmerLevel;
@@ -524,6 +537,16 @@ public class Activity_ListView extends Activity implements OnPageChangeListener 
 			return convertView;
 		}
 
+	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) { 		
+			System.out.println("++++++++++++++++++++++++++++");
+			Activity_ListView.this.finish();
+		}
+
+		return super.onKeyDown(keyCode, event);
 	}
 
 }
