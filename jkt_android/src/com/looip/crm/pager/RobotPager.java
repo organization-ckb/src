@@ -59,7 +59,7 @@ public class RobotPager extends BasePager implements OnClickListener {
 	//派宝机器人 包名
 	private String padbotPackageName="cn.inbot.padbotpad";
 	//是否已安装派宝机器人
-	private boolean installed;
+	private boolean installed = isInstalled(padbotPackageName, "派宝");
 	//机器人apk 路径
 	private String apkFile = Environment.getExternalStorageDirectory()
 			.getAbsolutePath().toString()
@@ -86,7 +86,7 @@ public class RobotPager extends BasePager implements OnClickListener {
 		txt_title.setText("机器人");
 		tv_left.setText("首页");
 		imgleft.setOnClickListener(this);
-		installed = isInstalled(padbotPackageName, "派宝");
+		
 		return view;
 	}
 
