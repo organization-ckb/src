@@ -31,10 +31,15 @@ import com.looip.crm.view.MyViewPager;
  * 
  */
 public class MainActivity extends Activity implements OnClickListener {
+	// 自定义的ViewPager
 	private MyViewPager myViewPager;
+	// 存放basePager的集合
 	private List<BasePager> pagerList = new ArrayList<BasePager>();
+	// 当前选中的条目
 	private int currentItem = R.id.rb_robot;
+	// 单选按按钮组
 	private RadioGroup radioGroup;
+	// BasePager
 	private BasePager basePager;
 
 	@Override
@@ -55,9 +60,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		// 获取intent 得到传递过来的position
 		Intent intent = getIntent();
 		currentItem = intent.getIntExtra("currentItem", R.id.rb_robot);
-		/*
-		 * 获取到radiogroup和viewpager
-		 */
+
+		// 获取到radiogroup和viewpager
 		radioGroup = (RadioGroup) findViewById(R.id.rg_main_radio);
 		myViewPager = (MyViewPager) findViewById(R.id.layout_content);
 
@@ -126,7 +130,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void initDate() {
 
 		ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(pagerList);
+		// 给MyViewPager设置适配器
 		myViewPager.setAdapter(pagerAdapter);
+
 		/**
 		 * 切换底部的tab页面进行展示
 		 */
@@ -141,13 +147,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			@Override
 			public void onPageScrolled(int position, float positionOffset,
 					int positionOffsetPixels) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onPageScrollStateChanged(int state) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -161,17 +165,24 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			@Override
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
-				// TODO Auto-generated method stub
+
 				switch (arg1) {
+				// 切换到机器人pager
 				case R.id.rb_robot:
 					myViewPager.setCurrentItem(0, false);
 					break;
+
+				// 切换到我的项目pager
 				case R.id.rb_myproject:
 					myViewPager.setCurrentItem(1, false);
 					break;
+
+				// 切换到视频会议pager
 				case R.id.rb_videosession:
 					myViewPager.setCurrentItem(2, false);
 					break;
+
+				// 切换到服务热线pager
 				case R.id.rb_servicetel:
 					myViewPager.setCurrentItem(3, false);
 					break;
@@ -214,13 +225,11 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return pages.size();
 		}
 
 		@Override
 		public boolean isViewFromObject(View arg0, Object arg1) {
-			// TODO Auto-generated method stub
 			return arg0 == arg1;
 		}
 
@@ -228,6 +237,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	/**
 	 * 处理点击事件
+	 * 
+	 * @author lixingtao
 	 */
 	@Override
 	public void onClick(View v) {
@@ -242,8 +253,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		switch (keyCode) {
+
+		// 匹配返回键
 		case KeyEvent.KEYCODE_BACK:
 			finish();
 			break;
