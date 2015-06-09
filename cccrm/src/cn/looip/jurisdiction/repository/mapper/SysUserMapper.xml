@@ -17,9 +17,15 @@
 	</sql>
 
 	<!-- 查询邮箱接口 -->
-	<select id="getUserEmail" parameterType="String" resultType="Integer">
+	<!-- <select id="getUserEmail" parameterType="String" resultType="Integer">
 		select id from sys_user where user_email = #{0};
-	</select>
+	</select> -->
+	
+	<!-- 根据邮箱修改密码 -->
+	<!-- <update id="updatePasswordByEmail" parameterType="cn.looip.jurisdiction.repository.domain.SysUser">
+		update sys_user set login_pwd = #{loginPwd}  where user_email = #{userEmail};
+	</update> -->
+	
 	
 	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -90,6 +96,7 @@
 		login_name=#{loginName},login_pwd=#{loginPwd},user_email=#{userEmail},user_mobile=#{userMobile},user_role_id=#{userRoleId}
 		where user_id=#{userId} and user_type=#{userType}
 	</update>
+	
 	<!-- 更新客户 -->
 	<update id="updateSysUserByCustomer" parameterType="cn.looip.jurisdiction.repository.domain.SysUser">
 		update sys_user set
@@ -101,7 +108,7 @@
 		update sys_user
 		<set>
 			<if test="loginName != null">
-				login_name = #{loginName,jdbcType=VARCHAR},
+				login_name = #{loginName,j-dbcType=VARCHAR},
 			</if>
 			<if test="loginPwd != null">
 				login_pwd = #{loginPwd,jdbcType=VARCHAR},

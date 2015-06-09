@@ -83,6 +83,14 @@ public class JurisdictionServiceImpl implements JurisdictionService {
 		// TODO Auto-generated method stub
 		return jurisdictionDAO.insertSysUserByCustomer(sysUser);
 	}
- 	}
+
+
+	//邮箱修改密码
+	/*@Override
+	public int updatePasswordByEmail(SysUser sysUser) {
+		
+		return jurisdictionDAO.updatePasswordByEmail(sysUser);
+	}*/
+ }
 
 

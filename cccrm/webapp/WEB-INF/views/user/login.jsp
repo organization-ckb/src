@@ -81,12 +81,22 @@
         </form>
     </div>
 	
-	<div style="float:left; margin-left:200px; margin-bottom:20px; font-size:14px;">
+	<div style="float:left; margin-left:200px; margin-top:20px; font-size:14px;">
     	友情链接：
         <a style="cursor:pointer; margin-left:30px;">持创研发中心官网</a>
         <a style="cursor:pointer; margin-left:30px;">极客邦官网</a>
     </div>
-	</div>
+    
+    <script type="text/javascript">
+		/*
+		function test(){
+			$.cookie('remember_flag','true',{expires:7});
+
+		}*/
+	
+	</script>
+		
+		</div>
 </body>
 
 </html>

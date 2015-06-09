@@ -6,10 +6,7 @@ body, p, div, ul, ol, li, dl, dd, dt, h1, h2, h3, h4, h5, h6, form,
 	padding: 0px;
 	border: 0;
 }
-html,body{
-    margin:0px;
-    height:100%;
-}
+
 ul, ol {
 	list-style: none;
 }
@@ -20,12 +17,10 @@ body {
 	background-position: top;
 	background-repeat: repeat-x;
 }
-
 select{
   border: 1px solid #e5e5e5;
   overflow: hidden;
 }
-
 table {
 	border-collapse: collapse;
 	border-spacing: 0px;
@@ -169,10 +164,11 @@ textarea {
 
 /*正文区域：main*/
 #main {
-	min-height: 70%;
+	min-height: 620px;
 	width: 960px;
 	padding-top: 20px;
 	margin-top: 5px;
+	max-height: 450px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: relative;

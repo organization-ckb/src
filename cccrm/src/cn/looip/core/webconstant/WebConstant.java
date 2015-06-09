@@ -5,6 +5,8 @@ package cn.looip.core.webconstant;
  *
  */
 public final class WebConstant {
+	public static final String PRODUCT_NAME="cccrm";
+	
 	/**
 	 * 后台URL前缀常量
 	 */

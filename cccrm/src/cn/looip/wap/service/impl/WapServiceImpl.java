@@ -1,9 +1,9 @@
 package cn.looip.wap.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,8 +46,6 @@ public class WapServiceImpl implements WapService {
 	public List<ProgrammerProject> getProjectInfo(int id) {
 		List<ProgrammerProject> projectinfo = wapdao.getProjectInfo(id);
 		for (int i = 0; i < projectinfo.size(); i++) {
-			// Calendar c=Calendar.getInstance();//获得系统当前日期
-			// long sysTime=c.getTime().getTime();
 			long sysTime = new Date().getTime();
 			long BeginTime = projectinfo.get(i).getBeginTime().getTime();
 			long EndTime = projectinfo.get(i).getEndTime().getTime();
@@ -58,6 +56,31 @@ public class WapServiceImpl implements WapService {
 			projectinfo.get(i).setTotalDays(totalDays);
 		}
 		return projectinfo;
+	}
+
+	//验证邮箱接口
+	@Override
+	public boolean getUserEmail(SysUser user) {
+		if(wapdao.getUserEmail(user.getUserEmail()) != null){
+				return true;
+		}
+		
+		return false;
+	}
+	
+	//查看项目合同照片
+	public String imgNumber(int id) {
+		// TODO Auto-generated method stub
+		return wapdao.imgNumber(id);
+	}
+
+	@Override
+	public void updatePasswordByEmail(int loginPwd, String userEmail) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("loginPwd", loginPwd);
+		map.put("userEmail", userEmail);
+		wapdao.updatePasswordByEmail(map);
+		
 	}
 
 }

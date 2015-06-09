@@ -9,7 +9,8 @@ import cn.looip.project.repository.domain.Programmer;
 import cn.looip.project.repository.domain.ProgrammerProject;
 import cn.looip.project.repository.domain.Project;
 
-public interface ProjectService {
+public interface ProjectService
+{
 	public int getFinalid();
 
 	public void saveProject(Project project);
@@ -89,13 +90,15 @@ public interface ProjectService {
 	public List<ProgrammerProject> endTimeprogrammer();
 
 	public Integer getProgrammerID(int id);
+
 	public Integer getProgrammersID(int id);
 
 	public void updateProjectStates();
 
 	public List<ProgrammerProject> getPprojectID(int id);
-	public Integer determineProject(String ProName,String BargainNo);
-	
-	public Integer determinePproject(int ProgrammerID,int ProjectID);
+
+	public Integer determineProject(String ProName, String BargainNo);
+
+	public Integer determinePproject(int ProgrammerID, int ProjectID);
 
 }

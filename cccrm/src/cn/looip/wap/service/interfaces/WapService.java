@@ -12,4 +12,13 @@ public interface WapService {
 	public List<Project>  getProjects(int id);
 	
 	public List<ProgrammerProject> getProjectInfo(int id);
+	
+	
+	//验证邮箱接口
+	public boolean getUserEmail(SysUser user);
+	
+	//查看项目合同照片
+	public String imgNumber(int id);
+	
+	public void updatePasswordByEmail(int loginPwd,String userEmail);
 }

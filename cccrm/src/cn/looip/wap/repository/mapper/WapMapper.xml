@@ -5,6 +5,7 @@
 <resultMap type="cn.looip.wap.repository.domain.Project" id="projectMap">
 <result column="id"  property="id"/>
 <result column="pro_name"  property="proName"/>
+<result column="pro_contract_pic" property="proImage"/>
 <result column="pro_begin_time"  property="starttime"/>
 <result column="pro_end_time"  property="endtime"/>
 <result column="pro_status"  property="status"/>
@@ -22,8 +23,9 @@
 <result column="begin_time"  property="beginTime"/>
 <result column="end_time"  property="endTime"/>
 <result column="day"  property="Day"/>
-
 </resultMap>
+
+
 
 <select id="getUserName" parameterType="String" resultType="Integer">
 select id from sys_user where login_name=#{0} 
@@ -42,4 +44,19 @@ select  pp.Id as Id,pp.begin_time as begin_time,pp.end_time as end_time,pp.statu
 		from programmer_project pp, programmer pg,project p,department d where pp.programmer_id=pg.id and pp.project_id=p.id and d.id=pg.department
 		and project_id=#{id}
 </select>
+
+	<!-- 查询邮箱接口 -->
+<select id="getUserEmail" parameterType="String" resultType="Integer">
+	select id from sys_user where user_email = #{0};
+</select>
+
+<update id="updatePasswordByEmail" parameterType="map">
+update sys_user set login_pwd=#{loginPwd} where user_email=#{userEmail} 
+</update>
+
+<!-- 查询图片 -->
+<select id="imgNumber" parameterType="int" resultType="String">
+select pro_contract_pic from project where id = #{id}
+</select>
+
 </mapper>

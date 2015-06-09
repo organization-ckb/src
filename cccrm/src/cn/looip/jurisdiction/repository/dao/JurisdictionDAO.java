@@ -10,7 +10,7 @@ import cn.looip.jurisdiction.repository.domain.SysUser;
 
 /**
  * 权限管理功能模块持久化接口定义
- * @author xuzhidong
+ * @author 
  */
 @Repository
 public interface JurisdictionDAO {
@@ -52,5 +52,7 @@ public interface JurisdictionDAO {
 	//验证邮箱接口
 	public Integer getUserEmail(String userEmail);
 	
+	//邮箱修改密码
+	//public int updatePasswordByEmail(SysUser sysUser); 
 }
 
